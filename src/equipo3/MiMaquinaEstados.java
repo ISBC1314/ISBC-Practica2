@@ -1,6 +1,6 @@
-import teams.ucmTeam.RobotAPI;
-import MaquinaEstados.MaquinaEstados;
+package equipo3;
 
+import teams.ucmTeam.RobotAPI;
 
 /**
  * Ejemplo de máquina de estados con 2 estados: Wander y GoToBall. Inicialmente estaremos en el estado Wander.

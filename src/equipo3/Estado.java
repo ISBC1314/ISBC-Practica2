@@ -1,8 +1,6 @@
-package MaquinaEstados;
+package equipo3;
 
 import teams.ucmTeam.RobotAPI;
-
-
 
 /**
  * Clases abstracta que define un estado de una máquina de estados finita. Sirve para manipular un RobotAPI.

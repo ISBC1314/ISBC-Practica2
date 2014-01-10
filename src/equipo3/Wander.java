@@ -1,6 +1,7 @@
+package equipo3;
+
 import teams.ucmTeam.RobotAPI;
-import MaquinaEstados.Estado;
-import MaquinaEstados.MaquinaEstados;
+
 
 
 /**

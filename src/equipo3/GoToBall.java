@@ -1,6 +1,6 @@
+package equipo3;
+
 import teams.ucmTeam.RobotAPI;
-import MaquinaEstados.Estado;
-import MaquinaEstados.MaquinaEstados;
 
 /**
  * Estado que hace que el robot vaya hacia la pelota y dispare a portería, si considera que puede
