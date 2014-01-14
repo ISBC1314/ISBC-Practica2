@@ -1,7 +1,7 @@
 package equipo1;
 
-import teams.rolebased.WorldAPI;
 import teams.ucmTeam.Behaviour;
+import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
 import teams.ucmTeam.UCMPlayer;
 
@@ -28,7 +28,7 @@ public final class PorteroTeamManager extends TeamManager {
 
 	@Override
 	public int onConfigure() {
-		return WorldAPI.ROBOT_OK;
+		return RobotAPI.ROBOT_OK;
 	}
 
 	@Override

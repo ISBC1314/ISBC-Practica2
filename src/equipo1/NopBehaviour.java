@@ -1,6 +1,5 @@
 package equipo1;
 
-import teams.rolebased.WorldAPI;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 
@@ -33,7 +32,7 @@ public final class NopBehaviour extends Behaviour {
 	public int takeStep() {
 		robot.setSpeed(0.0);
 
-		return WorldAPI.ROBOT_OK;
+		return RobotAPI.ROBOT_OK;
 	}
 
 }

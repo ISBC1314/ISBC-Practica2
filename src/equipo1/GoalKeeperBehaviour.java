@@ -1,9 +1,8 @@
 package equipo1;
 
-import EDU.gatech.cc.is.util.Vec2;
-import teams.rolebased.WorldAPI;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
+import EDU.gatech.cc.is.util.Vec2;
 
 public final class GoalKeeperBehaviour extends Behaviour {
 
@@ -69,7 +68,7 @@ public final class GoalKeeperBehaviour extends Behaviour {
         }
 
         robot.setDisplayString("GKEEP | " + state);
-        return WorldAPI.ROBOT_OK;
+        return RobotAPI.ROBOT_OK;
     }
 
     private void stepGoto () {
