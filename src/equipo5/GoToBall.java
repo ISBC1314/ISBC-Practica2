@@ -1,9 +1,9 @@
-package equipo4;
+package equipo5;
 
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 
-public class Blocker extends Behaviour{ 
+public class GoToBall extends Behaviour{ 
 	 
 	 @Override 
 	 public void configure() { 
@@ -12,13 +12,16 @@ public class Blocker extends Behaviour{
 	 
 	 @Override 
 	 public int takeStep() { 
-		 myRobotAPI.blockGoalKeeper(); 
-		 return RobotAPI.ROBOT_OK; 
+		 myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal()); 
+		 if (myRobotAPI.canKick()) 
+			 myRobotAPI.kick(); 
+		 
+		 myRobotAPI.setDisplayString("" + myRobotAPI.getFieldSide());
+		 return myRobotAPI.ROBOT_OK; 
 	 } 
-	 
 	 @Override 
 	 public void onInit(RobotAPI r) { 
-		 r.setDisplayString("BlockerBehaviour"); 
+		 r.setDisplayString("goToBallBehaviour"); 
 	 } 
 	 
 	 @Override 
@@ -31,3 +34,4 @@ public class Blocker extends Behaviour{
 		 // No hacemos nada 
 	 } 
 } 
+
