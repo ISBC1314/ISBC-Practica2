@@ -1,7 +1,5 @@
 package equipo4;
 
-import java.math.BigDecimal;
-
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import EDU.gatech.cc.is.util.Vec2;
@@ -70,8 +68,10 @@ public final class PorteroBehaviour extends Behaviour {
 		        break;
 		    }   
    	 }
+		if( myRobotAPI.getMatchRemainingTime() == 1000 )
+			RobotUtils.esbribirResultadoFichero(robot);
 
-        robot.setDisplayString(""+state);
+        robot.setDisplayString("PORTERO| "+state);
         return RobotAPI.ROBOT_OK;
     }
 
@@ -89,7 +89,7 @@ public final class PorteroBehaviour extends Behaviour {
     	
     	int miCampo = robot.getFieldSide();
     	
-    	double irY = robot.getBall().y*0.5 / 0.7625; // Seguimos la posicion Y de la pelota. Pero intentando no salir del área
+    	double irY = robot.toFieldCoordinates(robot.getBall()).y*0.25 / 0.7625; // Seguimos la posicion Y de la pelota. Pero intentando no salir del área
     	double irX = 1.3; // Nos mantenemos dentro del área. 
     	
     	Vec2 ir = new Vec2(irX*miCampo,irY);

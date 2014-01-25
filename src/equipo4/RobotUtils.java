@@ -1,5 +1,8 @@
 package equipo4;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 import teams.ucmTeam.RobotAPI;
 import EDU.gatech.cc.is.util.Vec2;
 
@@ -35,6 +38,15 @@ public final class RobotUtils {
     	return Math.abs(robot.toFieldCoordinates(robot.getBall()).x) > 1.1 && Math.abs(robot.toFieldCoordinates(robot.getBall()).y) < 0.5 ;
     }
     
+	/**
+     * Indica si la pelota esta en mi camop
+     * 
+     */
+	public static boolean pelotaEnMiCampo(RobotAPI robot){
+		Vec2 coordPelota = robot.toFieldCoordinates(robot.getBall());
+		return ( coordPelota.x * robot.getFieldSide() ) > 0;
+	}
+    
     
     /**
    	 * Indica si un jugador está bloqueado
@@ -52,7 +64,7 @@ public final class RobotUtils {
     	
     	robot.setSpeed(0.1);
     	int orientacion = RobotUtils.direccionALaQueMiro(robot);
-    	robot.setSteerHeading(RobotAPI.normalizeZero(robot.getPosition().t + Math.PI/2 * orientacion));   	
+    	robot.setSteerHeading(RobotAPI.normalizeZero(robot.getPosition().t + Math.PI * orientacion));   	
     }
     
     /**
@@ -102,6 +114,37 @@ public final class RobotUtils {
     	public static double distanciaEntre(Vec2 o, Vec2 d)
     	{
     		return Math.sqrt(Math.pow((d.x - o.x), 2) + Math.pow((d.y - o.y), 2));
+    	}
+    	
+    	
+    	/**Escribie el resultado del partido en un fichero
+    	 */
+    	public static void esbribirResultadoFichero(RobotAPI robot){
+    		
+    		 FileWriter fichero = null;
+    	        PrintWriter pw = null;
+    	        try
+    	        {
+    	            fichero = new FileWriter("./resultados.txt",true);
+    	            pw = new PrintWriter(fichero);
+	                pw.print("Mis Goles ");
+	                pw.print(robot.getMyScore());
+	                pw.print("  Goles Contrarios ");
+	                pw.println(robot.getOpponentScore());
+    	 
+    	        } catch (Exception e) {
+    	            e.printStackTrace();
+    	        } finally {
+    	           try {
+    	           // Nuevamente aprovechamos el finally para 
+    	           // asegurarnos que se cierra el fichero.
+    	           if (null != fichero)
+    	              fichero.close();
+    	           } catch (Exception e2) {
+    	              e2.printStackTrace();
+    	           }
+    	        }
+    		
     	}
         	
    
