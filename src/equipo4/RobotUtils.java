@@ -2,6 +2,9 @@ package equipo4;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import teams.ucmTeam.RobotAPI;
 import EDU.gatech.cc.is.util.Vec2;
@@ -130,7 +133,11 @@ public final class RobotUtils {
 	                pw.print("Mis Goles ");
 	                pw.print(robot.getMyScore());
 	                pw.print("  Goles Contrarios ");
-	                pw.println(robot.getOpponentScore());
+	                pw.print(robot.getOpponentScore());
+	                
+	                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	                Date date = new Date();
+	                pw.println ("   "+ dateFormat.format(date));
     	 
     	        } catch (Exception e) {
     	            e.printStackTrace();

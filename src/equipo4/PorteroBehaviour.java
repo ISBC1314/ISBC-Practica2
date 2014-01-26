@@ -98,7 +98,7 @@ public final class PorteroBehaviour extends Behaviour {
     
     private void stepDefendArea () { //DEfiende la porteria cuando la pelota esta dentro del area 
     	
-    	robot.setSpeed(0.2);
+    	robot.setSpeed(0.3);
     	robot.setSteerHeading(robot.getBall().t);
     	if (robot.canKick())
     		robot.kick();	
