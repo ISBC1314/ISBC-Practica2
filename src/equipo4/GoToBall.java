@@ -14,9 +14,8 @@ public int takeStep()
 	myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 	if (myRobotAPI.canKick())
 		myRobotAPI.kick();
- 
- 
- return myRobotAPI.ROBOT_OK;
+	
+	return myRobotAPI.ROBOT_OK;
 }
 
 public void onInit(RobotAPI r) 

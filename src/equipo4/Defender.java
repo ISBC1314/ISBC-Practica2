@@ -101,14 +101,14 @@ public class Defender extends Behaviour{
 		
 		double nuevaX = 0.8 * myRobotAPI.getFieldSide();
 		double nuevaY;
+		
 		if(zona == 0)
 			nuevaY = 0.35;
 		else
 			nuevaY = -0.35;
 		
 		Vec2 nuevaPos = new Vec2(nuevaX,nuevaY);
-		
-		Vec2 destino = goToPosition(myRobotAPI.getPosition(), nuevaPos);
+		Vec2 destino = RobotUtils.goToPosition(myRobotAPI.getPosition(), nuevaPos);
 		myRobotAPI.setSteerHeading(destino.t);
 		myRobotAPI.setSpeed(1);
 		
@@ -141,10 +141,10 @@ public class Defender extends Behaviour{
 		state = State.DEFEND;
 	}
 	
-	/** Me he quedado bloqueado **/
+	/** Me he quedado bloqueado y trato de desbloquearme **/
 	private void stepBlock() {
-		salirDeBloqueo();
-	   	if(!pelotaEnMiCuadrante())
+		RobotUtils.salirBloqueo(myRobotAPI);
+		if(!pelotaEnMiCuadrante())
 			state = State.DEFEND;
 	   	else
 	   		state = State.GOTO;
@@ -157,16 +157,6 @@ public class Defender extends Behaviour{
 			return RobotUtils.pelotaEnMiCampo(myRobotAPI) && (coordPelota.y > 0);
 		else
 			return RobotUtils.pelotaEnMiCampo(myRobotAPI) && (coordPelota.y < 0);
-	}
-	
-	/** Dada una posicion inicial, mueve al jugador a una posicion destino **/
-	private Vec2 goToPosition(Vec2 posInicial, Vec2 porDestino) {
-	      return new Vec2(porDestino.x - posInicial.x, porDestino.y - posInicial.y);
-	}
-	
-	/** Estoy bloqueado y trato de desbloquearme **/
-	private void salirDeBloqueo(){
-		// TODO
 	}
 	
 }

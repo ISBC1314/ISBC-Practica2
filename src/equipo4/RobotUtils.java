@@ -58,6 +58,11 @@ public final class RobotUtils {
     	return robot.opponentBlocking() || robot.teammateBlocking(); 
     }
     
+    /** Dada una posicion inicial, mueve al jugador a una posicion destino **/
+	public static Vec2 goToPosition(Vec2 posInicial, Vec2 porDestino) {
+	      return new Vec2(porDestino.x - posInicial.x, porDestino.y - posInicial.y);
+	}
+	
     /**
 	 * Para salir del bloqueo gira 90º 
 	 * Dependiendo de si el jugador se digige al este o al oeste del campo
@@ -65,9 +70,37 @@ public final class RobotUtils {
 	 */    
     public static void salirBloqueo (RobotAPI robot) {
     	
+    	/* DESBLOQUEO MARINA:
+    	
     	robot.setSpeed(0.1);
     	int orientacion = RobotUtils.direccionALaQueMiro(robot);
-    	robot.setSteerHeading(RobotAPI.normalizeZero(robot.getPosition().t + Math.PI * orientacion));   	
+    	robot.setSteerHeading(RobotAPI.normalizeZero(robot.getPosition().t + Math.PI * orientacion));
+    	
+    	*/
+    	
+    	/* DESBLOQUEO CLARA: */
+    	double miX = robot.getPosition().x;
+		double miY = robot.getPosition().y;
+		
+		double contrarioX;
+		double contrarioY;
+		
+		double distOponente = distanciaEntre(robot.getPosition(), robot.getClosestOpponent());
+		double distCompi = distanciaEntre(robot.getPosition(), robot.getClosestMate());
+		if(distOponente < distCompi){
+			contrarioX = robot.getClosestOpponent().x;
+			contrarioY = robot.getClosestOpponent().y;
+		}else{
+			contrarioX = robot.getClosestMate().x;
+			contrarioY = robot.getClosestMate().y;
+		}
+		
+		Vec2 nuevaPos = new Vec2(miX - contrarioX,miY - contrarioY);
+		Vec2 destino = goToPosition(robot.getPosition(), nuevaPos);
+		robot.setSteerHeading(destino.t);
+		robot.setSpeed(1);
+		
+		/* FIN DESBLOQUEO CLARA */
     }
     
     /**
