@@ -1,18 +1,18 @@
 package equipo4;
 
-import equipo5.Defender;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
 
 public final class EquipoCuatroTeamManager extends TeamManager {
 
-	private Behaviour[] behaviours = { new NopBehaviour(), // behaviours[0]
-			new PorteroBehaviour(), // behaviours[1]
-			new Defender(0), // behaviours[2] -> 0 = Defensa de arriba
-			new Defender(1), // behaviours[3] -> 1 = Defensa de abajo
-			new GoToBall(), // behaviours[4]
-			new Wander() // behaviours[5]
+	private Behaviour[] behaviours = {
+			new NopBehaviour(),		// behaviours[0] -> NOP
+			new PorteroBehaviour(), // behaviours[1] -> Portero
+			new Defender(0),		// behaviours[2] -> 0 = Defensa de arriba
+			new Defender(1),		// behaviours[3] -> 1 = Defensa de abajo
+			new GoToBall(),			// behaviours[4] -> GoToBall
+			new Wander()			// behaviours[5] -> Wander
 	};
 
 	private static enum State {
@@ -33,17 +33,16 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 
 	@Override
 	public Behaviour getDefaultBehaviour(int id) {
+				
 		switch (id) {
 		case 0:
-			return behaviours[1];
+			return behaviours[1];	// Portero
 		case 1:
-			return behaviours[2];
-
+			return behaviours[2];	// Defensa arriba
 		case 3:
-			return behaviours[3];
-
+			return behaviours[3];	// Defensa abajo
 		default:
-			return behaviours[0];
+			return behaviours[0];	// NOP
 		}
 	}
 
@@ -55,8 +54,7 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 	@Override
 	protected void onTakeStep() {
 
-		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que
-												// funcione
+		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione
 		state = calculaSigEstado();
 
 		switch (state) {
