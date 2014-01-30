@@ -12,7 +12,8 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 			new Defender(0),		// behaviours[2] -> 0 = Defensa de arriba
 			new Defender(1),		// behaviours[3] -> 1 = Defensa de abajo
 			new GoToBall(),			// behaviours[4] -> GoToBall
-			new Wander()			// behaviours[5] -> Wander
+			new Wander(),			// behaviours[5] -> Wander
+			new Attacker()			// behaviours[6] -> Attacker
 	};
 
 	private static enum State {
@@ -42,7 +43,7 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 		case 3:
 			return behaviours[3];	// Defensa abajo
 		default:
-			return behaviours[0];	// NOP
+			return behaviours[6];	// NOP
 		}
 	}
 
@@ -75,7 +76,7 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
 		_players[2].setBehaviour(behaviours[4]);// GoToball
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[4]);// GoToball
+		_players[4].setBehaviour(behaviours[6]);// GoToball
 			
 	}
 	
@@ -84,7 +85,7 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
 		_players[2].setBehaviour(behaviours[5]);// Wander
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[5]);// Wander
+		_players[4].setBehaviour(behaviours[6]);// Wander
 		
 	}
 
