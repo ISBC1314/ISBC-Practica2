@@ -7,14 +7,15 @@ import teams.ucmTeam.TeamManager;
 public final class EquipoCuatroTeamManager extends TeamManager {
 
 	private Behaviour[] behaviours = {
-			new NopBehaviour(),		// behaviours[0] -> NOP
-			new PorteroBehaviour(), // behaviours[1] -> Portero
-			new Defender(0),		// behaviours[2] -> 0 = Defensa de arriba
-			new Defender(1),		// behaviours[3] -> 1 = Defensa de abajo
-			new GoToBall(),			// behaviours[4] -> GoToBall
-			new Wander(),			// behaviours[5] -> Wander
-			new Attacker(),			// behaviours[6] -> Attacker
-			new BloqueadorPortero()	// behaviours[7] -> BloqueadorPorteroContrario
+			new NopBehaviour(),		    // behaviours[0] -> NOP
+			new PorteroBehaviour(),     // behaviours[1] -> Portero
+			new Defender(0),		    // behaviours[2] -> 0 = Defensa de arriba
+			new Defender(1),		    // behaviours[3] -> 1 = Defensa de abajo
+			new GoToBall(),			    // behaviours[4] -> GoToBall
+			new Wander(),			    // behaviours[5] -> Wander
+			new Attacker(),			    // behaviours[6] -> Attacker
+			new BloqueadorPortero(),	// behaviours[7] -> BloqueadorPorteroContrario
+			new BloqueadorAtacante()	// behaviours[8] -> BloqueadorAtacanteContrario
 	};
 
 	private static enum State {
@@ -77,7 +78,7 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
 		_players[2].setBehaviour(behaviours[4]);// GoToball
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[4]);// BLoqueadorPorteroContrario
+		_players[4].setBehaviour(behaviours[8]);// BLoqueadorAtacanteContrario
 			
 	}
 	
@@ -86,7 +87,7 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
 		_players[2].setBehaviour(behaviours[5]);// Wander
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[5]);// BloqueadorPorteroContrario
+		_players[4].setBehaviour(behaviours[8]);// BloqueadorAtacanteContrario
 		
 	}
 
