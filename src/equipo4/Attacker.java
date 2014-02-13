@@ -28,24 +28,25 @@ public class Attacker extends Behaviour{
 		state = makeStates();
 		
 		switch (state) {
-		case GOTO: {
-			
-			break;
-		}
-	
-		case WAIT: {
-			Vec2 nuevaPos = new Vec2(0,0);
-			Vec2 destino = RobotUtils.goToPosition(myRobotAPI.getPosition(), nuevaPos);
-			myRobotAPI.setSteerHeading(destino.t);
-			myRobotAPI.setSpeed(1);
-			break;
-		}
-		case KICK: {
-			myRobotAPI.kick();
-			break;
+			case GOTO: {
+				
+				break;
+			}
+		
+			case WAIT: {
+				Vec2 nuevaPos = new Vec2(0,0);
+				Vec2 destino = RobotUtils.goToPosition(myRobotAPI.getPosition(), nuevaPos);
+				myRobotAPI.setSteerHeading(destino.t);
+				myRobotAPI.setSpeed(1);
+				break;
+			}
+			case KICK: {
+				myRobotAPI.kick();
+				break;
+			}
 		}
 		
-	}
+		myRobotAPI.setDisplayString("Atacante |" + state);
 		return myRobotAPI.ROBOT_OK; 
 	}
 	

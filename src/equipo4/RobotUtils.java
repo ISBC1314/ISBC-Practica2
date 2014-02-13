@@ -32,6 +32,7 @@ public final class RobotUtils {
    	 */ 
     public static boolean estoyEnMiArea (RobotAPI robot) {
     	return Math.abs(robot.getPosition().x) > 1.145;
+    	//FIXME No tiene en cuenta el campo en el que estamos jugando
     }
     
     /**
@@ -39,6 +40,7 @@ public final class RobotUtils {
    	 */ 
     public static boolean pelotaEnMiArea (RobotAPI robot) {
     	return Math.abs(robot.toFieldCoordinates(robot.getBall()).x) > 1.1 && Math.abs(robot.toFieldCoordinates(robot.getBall()).y) < 0.5 ;
+    	//FIXME No tiene en cuenta el campo en el que estamos jugando
     }
     
 	/**
