@@ -72,15 +72,6 @@ public final class RobotUtils {
 	 */    
     public static void salirBloqueo (RobotAPI robot) {
     	
-    	/* DESBLOQUEO MARINA:
-    	
-    	robot.setSpeed(0.1);
-    	int orientacion = RobotUtils.direccionALaQueMiro(robot);
-    	robot.setSteerHeading(RobotAPI.normalizeZero(robot.getPosition().t + Math.PI * orientacion));
-    	
-    	*/
-    	
-    	/* DESBLOQUEO CLARA: */
     	double miX = robot.getPosition().x;
 		double miY = robot.getPosition().y;
 		
@@ -102,7 +93,7 @@ public final class RobotUtils {
 		robot.setSteerHeading(destino.t);
 		robot.setSpeed(1);
 		
-		/* FIN DESBLOQUEO CLARA */
+	
     }
     
     /**
