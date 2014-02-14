@@ -7,8 +7,11 @@ import teams.ucmTeam.RobotAPI;
 public final class BloqueadorAtacante extends Behaviour {
 
     private static enum State {
-        /**Se dirige hacia el atacante contrario que tiene la pelota o que esta mas cerca de ella */
+        /**Se dirige hacia el atacante contrario que tiene la pelota */
         IR_HACIA_ATACANTE,
+        
+        /**Si ningun contrario tiene la pelota me posiciono en mi area */
+        RETRASAR,
 
         /** Bloquea al atacante contrario */
         BLOQUEAR,
@@ -54,6 +57,10 @@ public final class BloqueadorAtacante extends Behaviour {
 		        stepIrHaciaAtacante();
 		        break;
 		    }
+		    case RETRASAR: {
+		        stepRetrasar();
+		        break;
+		    }
 		    case BLOQUEAR: {
 		        stepBloquear();
 		        break;
@@ -68,12 +75,17 @@ public final class BloqueadorAtacante extends Behaviour {
         return RobotAPI.ROBOT_OK;
     }
 
-    private void stepIrHaciaAtacante () { //Ir hacia el contrario que mas cerca este de la bola 
+    private void stepIrHaciaAtacante () { //Ir hacia el contrario que tiene la pelota
     	
     	RobotUtils.moverJugador(robot, oponenteMasCercaDeLaPelota);
     }
+    
+    private void stepRetrasar() { //Ir hacia el contrario que tiene la pelota
+    	
+    	robot.setSteerHeading(robot.getOurGoal().t);
+    }
 
-    private void stepBloquear () { //Bloquea al  atacante que mas cerca esta de la bola
+    private void stepBloquear () { //Bloquea al  atacante tiene la pelota
     	
     	robot.blockClosest();
     }
@@ -85,18 +97,20 @@ public final class BloqueadorAtacante extends Behaviour {
     
     private State calculaSigEstado(){
     	
-    	//TODO Mirar para desbloquearse de un jugador contrario que no sea el que mas cerca de la bola este
-    	if(robot.teammateBlocking()) 
-    		return State.BLOCKED;
-    	
-    	//Miro el jugador contrario que esté mas cerca de la bola
     	oponenteMasCercaDeLaPelota = jugadorContrarioMasCercaDeLaBola();
-    	//Si estoy cerca suyo lo bloqueo si no voy hacia el
     	
-    	Vec2 miPos=robot.getPosition();
-    	double distancia = Math.sqrt(Math.hypot(miPos.x - oponenteMasCercaDeLaPelota.x ,  miPos.y - oponenteMasCercaDeLaPelota.y));
+    	// Si estoy bloqueado por un alguien que no es el jugador que quiero bloquear 
+    	if(RobotUtils.estoyBloqueado(robot) && robot.getClosestOpponent().equals(oponenteMasCercaDeLaPelota) == false  )
+    		return State.BLOCKED;    	
     	
-    	if(distancia <= 0.3)
+    	//Si el jugador contrario que esta mas cerca de la pelota no esta realmente cerca. Me retraso. 
+    	Vec2 pelota =robot.toFieldCoordinates(robot.getBall());
+    	double distancia = Math.sqrt(Math.hypot(oponenteMasCercaDeLaPelota.x - pelota.x ,  oponenteMasCercaDeLaPelota.y - pelota.y));
+    	if(distancia >= 0.6)
+    		return State.RETRASAR;
+    	
+    	//Si estoy cerca del jugador al que quiero bloquear
+    	if(robot.getClosestOpponent().equals(oponenteMasCercaDeLaPelota) == true )
     		return State.BLOQUEAR;
 
     	return State.IR_HACIA_ATACANTE;   	

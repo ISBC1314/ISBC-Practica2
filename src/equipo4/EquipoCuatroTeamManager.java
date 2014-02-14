@@ -28,6 +28,9 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 
 	private RobotAPI myRobotAPI;
 	private State state;
+	
+	private int portero = 0;
+	private int porteroSustituto = 2;
 
 	@Override
 	public Behaviour[] createBehaviours() {
@@ -41,9 +44,13 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 		case 0:
 			return behaviours[1];	// Portero
 		case 1:
-			return behaviours[2];	// Defensa arriba
+			return behaviours[2];	// Defensa Arriba
+		case 2:
+			return behaviours[5];	// Wander
 		case 3:
-			return behaviours[3];	// Defensa abajo
+			return behaviours[3];	// Defensa Abajo
+		case 4:
+			return behaviours[5];	// Wander
 		default:
 			return behaviours[5];	// Wander
 		}
@@ -74,30 +81,43 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 	}
 
 	private void stepOfensivo() {
-		_players[0].setBehaviour(behaviours[1]);// Portero
+		_players[portero].setBehaviour(behaviours[1]);// Portero
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
-		_players[2].setBehaviour(behaviours[4]);// GoToball
+		_players[porteroSustituto].setBehaviour(behaviours[4]);// GoToBall
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[8]);// BLoqueadorAtacanteContrario
+		_players[4].setBehaviour(behaviours[4]);// GoToBall
 			
 	}
 	
 	private void stepDefensivo() {
-		_players[0].setBehaviour(behaviours[1]);// Portero
+		
+		
+			
+		
+		_players[portero].setBehaviour(behaviours[1]);// Portero
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
-		_players[2].setBehaviour(behaviours[5]);// Wander
+		_players[porteroSustituto].setBehaviour(behaviours[5]);// Wander
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[8]);// BloqueadorAtacanteContrario
+		_players[4].setBehaviour(behaviours[5]);// BloqueadorAtacante
 		
 	}
 
 	private State calculaSigEstado() {
+		
+		//Si el portero esta bloqueado. Se pone al sustituto
+		if(_players[portero].getRobotAPI().opponentBlocking()){
+			int aux = portero;
+			portero = porteroSustituto;
+			porteroSustituto = aux;
+		}
+			
+		
 
 		if (RobotUtils.pelotaEnMiCampo(myRobotAPI))
 			return State.DEFENSIVO;
 		else
 			return State.OFENSIVO;
-
+		 
 	}
 
 }

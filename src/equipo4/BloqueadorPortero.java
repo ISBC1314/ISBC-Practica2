@@ -67,7 +67,7 @@ public final class BloqueadorPortero extends Behaviour {
 
     private void stepIrPorteriaContraria () { //Ir a la porteria contraria
     	
-    	RobotUtils.moverJugador(robot, robot.toFieldCoordinates(robot.getOpponentsGoal()));
+    	robot.setSteerHeading(robot.getOpponentsGoal().t);
      
     }
 
