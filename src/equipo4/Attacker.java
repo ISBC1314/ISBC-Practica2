@@ -10,37 +10,50 @@ public class Attacker extends Behaviour{
 	private RobotAPI robot;
 	private State state;
 	private static enum State {
-	    /** Go to the ball */
+	    /** Go to the ball or player with ball*/
 			GOTO,
 	
 		/** Wait the ball in the center */
 			WAIT,
 	
-		/** KICK THE BALL AWAY */
+		/** Kick the ball to goal*/
 			KICK,
+		/** MOVE FORWARD to the goal until can kick*/
+			FORWARD,
+			
 	}
 	public void onInit(RobotAPI arg0) {	
-		this.state = State.KICK;
+		this.state = State.GOTO;
 	}
 
 	public int takeStep() {
 		
 		state = makeStates();
+		System.out.println(state);
 		
 		switch (state) {
 			case GOTO: {
-				
+				myRobotAPI.setBehindBall(myRobotAPI.getBall());
+				break;
+			}
+			
+			case FORWARD: {
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				break;
 			}
 		
 			case WAIT: {
-				Vec2 nuevaPos = new Vec2(0,0);
+				
+				Vec2 nuevaPos = new Vec2(0,myRobotAPI.getBall().y);
 				Vec2 destino = RobotUtils.goToPosition(myRobotAPI.getPosition(), nuevaPos);
 				myRobotAPI.setSteerHeading(destino.t);
 				myRobotAPI.setSpeed(1);
 				break;
 			}
 			case KICK: {
+				/*if(!myRobotAPI.alignedToBallandGoal()){
+					myRobotAPI.setSteerHeading();
+				}*/
 				myRobotAPI.kick();
 				break;
 			}
@@ -52,16 +65,28 @@ public class Attacker extends Behaviour{
 	
 	public State makeStates(){
 		
-    	//if(!RobotUtils.pelotaEnMiArea(robot))
-    	//	return  State.GOTO;
-    	if (myRobotAPI.canKick())
-    		return State.KICK;
-    	if (myRobotAPI.closestToBall())
-    		return State.GOTO;
-    	//if(RobotUtils.pelotaEnMiArea(robot))
-    	//	return  State.DEFEND_AREA;
-
-    	return State.WAIT;
+		Vec2 ball = myRobotAPI.getBall();
+		Vec2 coorBall = myRobotAPI.toFieldCoordinates(ball);
+		int side = myRobotAPI.getFieldSide();
+		int atside = (-1)*side;
+		
+		//CASES:
+		//If I'm the player with ball
+		if (myRobotAPI.closestToBall()){
+			//If enough current to goal
+			if (enoughClose(myRobotAPI.getPosition(),myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal()),0.2)){
+				return State.KICK;
+			}
+			return State.FORWARD;
+		}
+		//Opposition field Ball => GOTO		
+		if ((coorBall.x >=0 && atside==myRobotAPI.EAST_FIELD)||(coorBall.x <= 0 && atside==myRobotAPI.WEST_FIELD)){
+			return State.GOTO;
+		}
+		//My field Ball => WAIT PASS
+		else{
+			return State.WAIT;
+		}
 	}
 	
 	public void configure() {	}
@@ -70,6 +95,21 @@ public class Attacker extends Behaviour{
 	
 	public void onRelease(RobotAPI arg0) {	}
 
-
+	public boolean enoughClose(Vec2 v1, Vec2 v2, double dis){
+		//PITAGORAS
+		double disX = v1.x-v2.x;
+		disX = disX*disX;
+		double disY = v1.y-v2.y;
+		disY = disY*disY;
+		double aux = disX+disY;
+		double max = dis*dis;
+		
+		if(aux<=max){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 
 }

@@ -50,7 +50,7 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 		case 3:
 			return behaviours[3];	// Defensa Abajo
 		case 4:
-			return behaviours[5];	// Wander
+			return behaviours[6];	// Attacker
 		default:
 			return behaviours[5];	// Wander
 		}
@@ -85,7 +85,7 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
 		_players[porteroSustituto].setBehaviour(behaviours[4]);// GoToBall
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[4]);// GoToBall
+		_players[4].setBehaviour(behaviours[6]);// Attacker
 			
 	}
 	
@@ -98,7 +98,7 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
 		_players[porteroSustituto].setBehaviour(behaviours[5]);// Wander
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[5]);// BloqueadorAtacante
+		_players[4].setBehaviour(behaviours[6]);// Attacker //BloqueadorAtacante
 		
 	}
 
