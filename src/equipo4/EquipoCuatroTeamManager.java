@@ -83,22 +83,19 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 	private void stepOfensivo() {
 		_players[portero].setBehaviour(behaviours[1]);// Portero
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
-		_players[porteroSustituto].setBehaviour(behaviours[4]);// GoToBall
+		_players[porteroSustituto].setBehaviour(behaviours[6]);// Attaker
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
 		_players[4].setBehaviour(behaviours[6]);// Attacker
 			
 	}
 	
 	private void stepDefensivo() {
-		
-		
-			
-		
+
 		_players[portero].setBehaviour(behaviours[1]);// Portero
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
 		_players[porteroSustituto].setBehaviour(behaviours[5]);// Wander
 		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[6]);// Attacker //BloqueadorAtacante
+		_players[4].setBehaviour(behaviours[5]);// Wander
 		
 	}
 

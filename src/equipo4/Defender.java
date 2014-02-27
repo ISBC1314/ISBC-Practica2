@@ -120,6 +120,10 @@ public class Defender extends Behaviour{
 	/** Si la pelota entra en mi zona voy hacia ella **/
 	private void stepGoto(){
 		
+		Vec2 porteriaContraria = myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal());
+		Vec2 pelota = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
+		Vec2 ir = myRobotAPI.toEgocentricalCoordinates(new Vec2(porteriaContraria.x, pelota.y));
+		
 		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 		 
 		Vec2 balon = myRobotAPI.getBall();

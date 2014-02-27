@@ -105,7 +105,7 @@ public final class PorteroBehaviour extends Behaviour {
     }
 
     
-    private void stepBlock() { //TODO Funciona muy mal
+    private void stepBlock() { 
 
     	 RobotUtils.salirBloqueo(robot);
     }

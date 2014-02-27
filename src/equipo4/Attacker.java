@@ -1,13 +1,11 @@
 package equipo4;
 
-
 import EDU.gatech.cc.is.util.Vec2;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 
 public class Attacker extends Behaviour{
 
-	private RobotAPI robot;
 	private State state;
 	private static enum State {
 	    /** Go to the ball or player with ball*/
@@ -20,6 +18,8 @@ public class Attacker extends Behaviour{
 			KICK,
 		/** MOVE FORWARD to the goal until can kick*/
 			FORWARD,
+		/** EL jugador esta bloqueado*/	
+			BLOCKED
 			
 	}
 	public void onInit(RobotAPI arg0) {	
@@ -38,7 +38,9 @@ public class Attacker extends Behaviour{
 			}
 			
 			case FORWARD: {
-				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+				Vec2 porteriaContraria =  myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal());
+				porteriaContraria.y = + 0;
+				myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(porteriaContraria));
 				break;
 			}
 		
@@ -51,15 +53,16 @@ public class Attacker extends Behaviour{
 				break;
 			}
 			case KICK: {
-				/*if(!myRobotAPI.alignedToBallandGoal()){
-					myRobotAPI.setSteerHeading();
-				}*/
 				myRobotAPI.kick();
+				break;
+			}
+			case BLOCKED: {
+				RobotUtils.salirBloqueo(myRobotAPI);
 				break;
 			}
 		}
 		
-		myRobotAPI.setDisplayString("Atacante |" + state);
+		myRobotAPI.setDisplayString("ATACANTE " + state);
 		return myRobotAPI.ROBOT_OK; 
 	}
 	
@@ -71,6 +74,11 @@ public class Attacker extends Behaviour{
 		int atside = (-1)*side;
 		
 		//CASES:
+		//Si estoy bloqueado
+		if(RobotUtils.estoyBloqueado(myRobotAPI))
+    		return State.BLOCKED;
+		
+		
 		//If I'm the player with ball
 		if (myRobotAPI.closestToBall()){
 			//If enough current to goal
