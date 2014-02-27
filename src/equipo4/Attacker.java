@@ -33,7 +33,7 @@ public class Attacker extends Behaviour{
 		
 		switch (state) {
 			case GOTO: {
-				myRobotAPI.setBehindBall(myRobotAPI.getBall());
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				break;
 			}
 			

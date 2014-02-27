@@ -15,7 +15,8 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 			new Wander(),			    // behaviours[5] -> Wander
 			new Attacker(),			    // behaviours[6] -> Attacker
 			new BloqueadorPortero(),	// behaviours[7] -> BloqueadorPorteroContrario
-			new BloqueadorAtacante()	// behaviours[8] -> BloqueadorAtacanteContrario
+			new BloqueadorAtacante(),	// behaviours[8] -> BloqueadorAtacanteContrario
+			new DefensaSolo()			// behaviours[9] -> DefensaSolo
 	};
 
 	private static enum State {

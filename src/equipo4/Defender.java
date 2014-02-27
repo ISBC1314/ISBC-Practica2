@@ -124,7 +124,7 @@ public class Defender extends Behaviour{
 		Vec2 pelota = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
 		Vec2 ir = myRobotAPI.toEgocentricalCoordinates(new Vec2(porteriaContraria.x, pelota.y));
 		
-		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+		myRobotAPI.setBehindBall(ir);
 		 
 		Vec2 balon = myRobotAPI.getBall();
 	    if (balon.r < myRobotAPI.getPlayerRadius() * 6) 
