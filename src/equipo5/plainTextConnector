@@ -1,0 +1,14 @@
+<TextFileConfiguration>
+	<DescriptionClassName>equipo5.SoccerBotsDescription</DescriptionClassName>
+	<DescriptionMappings>
+		<Map>comportamientosJugadores</Map>
+		<Map>golesFavor</Map>
+		<Map>golesContra</Map>
+		<Map>score</Map>
+		<Map>tiempoQueFalta</Map>
+	</DescriptionMappings>
+	<SolutionClassName>equipo5.SoccerBotsSolution</SolutionClassName>
+	<SolutionMappings>
+		<Map>result</Map>
+	</SolutionMappings>
+</TextFileConfiguration>

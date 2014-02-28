@@ -28,25 +28,21 @@ public class CasesCBR implements StandardCBRApplication
 {
 	
 	/**  
-	  
-		· Tenemos atributos y Métodos getXXX() y setXXX() por cada atributo.
-		· Cuando necesitemos referirnos a un atributo utilizaremos la clase Attribute:
-					new Attribute(“nombreAtributo”, CasesCBR.class);
-					
-		· Cada componente del caso necesita un identificador único (para guardarlo o referenciarlo)
-					interface CaseComponent {
-						public Attribute getIdAttribute();
-					}
 		
 		--> Pasos para crear una aplicación CBR <--
 		
 		1. Crear la clase principal de la aplicación -> StandardCBRApplication
+				· public interface StandardCBRApplication
 		
 		2. Representar los componentes de los casos -> CaseComponent
+				· SoccerBotsDescription
+				· SoccerBotsSolution
 		
 		3. Elegir una implementación de la base de casos -> CaseBase
-		
+				· _caseBase = new LinealCaseBase();		¿?
+				
 		4. Configurar o crear un conector que carge la base de casos -> Connector
+				· HSQLDB
 		
 		5. Completar el código de la aplicación.
 	 
@@ -73,7 +69,7 @@ public class CasesCBR implements StandardCBRApplication
 	/** Configura la persistencia de los casos y su organización en memoria **/
 	@Override
 	public void configure() throws ExecutionException {
-		// TODO Auto-generated method stub
+		
 		try{
 			// Nos creamos un conector de la base de datos
 			_connector = new DataBaseConnector();
@@ -127,10 +123,10 @@ public class CasesCBR implements StandardCBRApplication
 		
 		// equal es la funcion de similitud LOCAL
 		// Asignamos a cada atributo la funcion de similitud que va a utilizar
-		simConfig.addMapping(new Attribute("GolesFavor", SoccerBotsDescription.class), new Equal());
-		simConfig.addMapping(new Attribute("GolesContra", SoccerBotsDescription.class), new Equal());
-		simConfig.addMapping(new Attribute("Score", SoccerBotsDescription.class), new Equal());
-		simConfig.addMapping(new Attribute("TiempoFalta", SoccerBotsDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("golesFavor", SoccerBotsDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("golesContra", SoccerBotsDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("score", SoccerBotsDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("tiempoQueFalta", SoccerBotsDescription.class), new Equal());
 
 		java.util.Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		
