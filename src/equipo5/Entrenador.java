@@ -1,5 +1,12 @@
 package equipo5;
 
+import jcolibri.cbrcore.CBRQuery;
+import jcolibri.exception.ExecutionException;
+import jcolibri.test.recommenders.travelData.TravelDescription;
+import jcolibri.test.test1.Test1;
+import teams.ucmTeam.Behaviour;
+import teams.ucmTeam.RobotAPI;
+import teams.ucmTeam.TeamManager;
 import equipo4.Attacker;
 import equipo4.BloqueadorAtacante;
 import equipo4.BloqueadorPortero;
@@ -9,9 +16,6 @@ import equipo4.NopBehaviour;
 import equipo4.PorteroBehaviour;
 import equipo4.RobotUtils;
 import equipo4.Wander;
-import teams.ucmTeam.RobotAPI;
-import teams.ucmTeam.Behaviour;
-import teams.ucmTeam.TeamManager;
 
 public class Entrenador extends TeamManager { 
 	 
@@ -124,6 +128,27 @@ public class Entrenador extends TeamManager {
 		else
 			return State.OFENSIVO;
 		 
+	}
+	
+	public void run(){
+		try{
+		
+			// Creamos la aplicacion y lo configuramos
+			Test1 test1 = new Test1();
+			test1.configure();
+			test1.preCycle();
+			
+			// Creamos una query
+			CBRQuery query = new CBRQuery();			
+			SoccerBotsDescription queryDesc = new SoccerBotsDescription();
+			query.setDescription(queryDesc);
+			
+			test1.cycle(query);
+			
+			test1.postCycle();
+		
+		} catch (Exception e){ e.printStackTrace();}
+		
 	}
 
 	 
