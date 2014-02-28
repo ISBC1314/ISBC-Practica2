@@ -70,7 +70,7 @@ public final class DefensaSolo extends Behaviour {
 		    }   
    	 }
 
-        robot.setDisplayString("PORTERO| "+state);
+        robot.setDisplayString("DEFENSA| "+state);
         return RobotAPI.ROBOT_OK;
     }
 

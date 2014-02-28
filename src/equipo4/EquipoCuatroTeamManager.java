@@ -28,10 +28,15 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 	}
 
 	private RobotAPI myRobotAPI;
-	private State state;
+	private State estadoActual = State.DEFENSIVO;
+	private State estadoAnterior = State.DEFENSIVO;
 	
 	private int portero = 0;
-	private int porteroSustituto = 2;
+	private int defensaArriba = 1;
+	private int atackWander1 = 2;
+	private int defensaAbajo = 3;
+	private int atackWander2 = 4;
+	
 
 	@Override
 	public Behaviour[] createBehaviours() {
@@ -66,9 +71,10 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 	protected void onTakeStep() {
 
 		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione
-		state = calculaSigEstado();
+		estadoAnterior = estadoActual;
+		estadoActual = calculaSigEstado();
 
-		switch (state) {
+		switch (estadoActual) {
 			case OFENSIVO: {
 				stepOfensivo();
 				break;
@@ -83,39 +89,52 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 
 	private void stepOfensivo() {
 		_players[portero].setBehaviour(behaviours[1]);// Portero
-		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
-		_players[porteroSustituto].setBehaviour(behaviours[6]);// Attaker
-		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[6]);// Attacker
+		_players[defensaArriba].setBehaviour(behaviours[2]);// Defensa Arriba
+		_players[atackWander1].setBehaviour(behaviours[6]);// Attaker
+		_players[defensaAbajo].setBehaviour(behaviours[3]);// Defensa Abajo
+		_players[atackWander2].setBehaviour(behaviours[6]);// Attacker
 			
 	}
 	
 	private void stepDefensivo() {
 
 		_players[portero].setBehaviour(behaviours[1]);// Portero
-		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
-		_players[porteroSustituto].setBehaviour(behaviours[5]);// Wander
-		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[5]);// Wander
+		_players[defensaArriba].setBehaviour(behaviours[2]);// Defensa Arriba
+		_players[atackWander1].setBehaviour(behaviours[5]);// Wander
+		_players[defensaAbajo].setBehaviour(behaviours[3]);// Defensa Abajo
+		_players[atackWander2].setBehaviour(behaviours[5]);// Wander
 		
 	}
 
 	private State calculaSigEstado() {
-		
-		//Si el portero esta bloqueado. Se pone al sustituto
-		if(_players[portero].getRobotAPI().opponentBlocking()){
-			int aux = portero;
-			portero = porteroSustituto;
-			porteroSustituto = aux;
+
+		if (RobotUtils.pelotaEnMiCampo(myRobotAPI)){
+			//Si el portero esta bloqueado. Se pone al sustituto
+			if(_players[portero].getRobotAPI().opponentBlocking()){
+				int aux = portero;
+				portero = atackWander1;
+				atackWander1 = aux;
+			}
+			
+			return State.DEFENSIVO;
+		}
+		else{
+			
+			if(estadoActual == State.DEFENSIVO && _players[defensaArriba].getRobotAPI().closestToBall()){
+				int aux = defensaArriba;
+				defensaArriba = atackWander1;
+				atackWander1 = aux;
+			}
+			
+			if(estadoActual == State.DEFENSIVO && _players[defensaAbajo].getRobotAPI().closestToBall() ){
+				int aux = defensaAbajo;
+				defensaAbajo = atackWander1;
+				atackWander1 = aux;
+			}
+			
+			return State.OFENSIVO;
 		}
 			
-		
-
-		if (RobotUtils.pelotaEnMiCampo(myRobotAPI))
-			return State.DEFENSIVO;
-		else
-			return State.OFENSIVO;
-		 
 	}
 
 }

@@ -22,8 +22,17 @@ public class Attacker extends Behaviour{
 			BLOCKED
 			
 	}
+	
+	private Vec2 porteriaContraria;
+	
 	public void onInit(RobotAPI arg0) {	
 		this.state = State.GOTO;
+		
+		//double valorRandom = Math.random()*0.2;
+		//int signoRandom = ((int) (Math.random()*10)) % 2 == 0 ? 1 : -1;  
+		
+		//porteriaContraria =  myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal());
+		//porteriaContraria.y = + (valorRandom * signoRandom);
 	}
 
 	public int takeStep() {
@@ -33,14 +42,16 @@ public class Attacker extends Behaviour{
 		
 		switch (state) {
 			case GOTO: {
+				
 				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				break;
 			}
 			
 			case FORWARD: {
-				Vec2 porteriaContraria =  myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal());
-				porteriaContraria.y = + 0;
-				myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(porteriaContraria));
+				
+				myRobotAPI.setDisplayString("" + porteriaContraria);
+				
+				myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(myRobotAPI.getOpponentsGoal()));
 				break;
 			}
 		

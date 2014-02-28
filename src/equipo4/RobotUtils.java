@@ -31,7 +31,7 @@ public final class RobotUtils {
    	 * Indica si el jugador está en su área
    	 */ 
     public static boolean estoyEnMiArea (RobotAPI robot) {
-    	return Math.abs(robot.getPosition().x) > 1.145;
+    	return Math.abs(robot.getPosition().x) > 1.145 && Math.abs(robot.getPosition().y) < 0.4 ;
     	//FIXME No tiene en cuenta el campo en el que estamos jugando
     }
     
@@ -125,7 +125,7 @@ public final class RobotUtils {
       	         	
         	Vec2 myPos=robot.getPosition();
         	double distancia = Math.sqrt(Math.hypot(myPos.x - pos.x ,  myPos.y - pos.y));
-        	double velocidad = distancia < 1.0 ? distancia : 1.0;
+        	double velocidad = distancia < 1.0 ? distancia*1.15 : 1.0;
         	robot.setSpeed(velocidad);
         	
         	moverJugador(robot,pos);	       	
