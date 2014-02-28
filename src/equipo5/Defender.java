@@ -17,7 +17,10 @@ public class Defender extends Behaviour{
 			DEFEND,
 	
 		/** Find and kick the ball */
-			KICK;
+			KICK,
+			
+		/** El jugador esta bloqueado*/	
+			BLOCK;
 	}
 
 	public Defender(int z){
@@ -46,6 +49,10 @@ public class Defender extends Behaviour{
 				stepKick();
 				break;
 			}
+			case BLOCK: {
+				stepBlock();
+				break;
+			}
 		}
 		
 		if(pelotaEnMiCuadrante())
@@ -53,6 +60,9 @@ public class Defender extends Behaviour{
 		else
 			state = State.DEFEND;
 			
+		if(RobotUtils.estoyBloqueado(myRobotAPI))
+			state = State.BLOCK;
+		
 		if(zona == 0)
 			myRobotAPI.setDisplayString("ARRIBA |" + state);
 		else
@@ -73,6 +83,7 @@ public class Defender extends Behaviour{
 			myRobotAPI.setDisplayString("ARRIBA |" + state);
 		else
 			myRobotAPI.setDisplayString("ABAJO |" + state);
+		
 	} 
 	 
 	@Override 
@@ -85,43 +96,43 @@ public class Defender extends Behaviour{
 		// No hacemos nada
 	}	
 
-	// Si la pelota no está en mi zona me quedo en mi sitio defendiendo
+	/** Si la pelota no está en mi zona me quedo en mi sitio defendiendo **/
 	private void stepDefend(){
 		
 		double nuevaX = 0.8 * myRobotAPI.getFieldSide();
 		double nuevaY;
+		
 		if(zona == 0)
 			nuevaY = 0.35;
 		else
 			nuevaY = -0.35;
 		
 		Vec2 nuevaPos = new Vec2(nuevaX,nuevaY);
-		
-		Vec2 destino = goToPosition(myRobotAPI.getPosition(), nuevaPos);
+		Vec2 destino = RobotUtils.goToPosition(myRobotAPI.getPosition(), nuevaPos);
 		myRobotAPI.setSteerHeading(destino.t);
 		myRobotAPI.setSpeed(1);
 		
-		// La pelota está en MI campo
+		// La pelota está en MI zona
         if(pelotaEnMiCuadrante())
 			state = State.GOTO;
 	}
 	
-	// Si la pelota entra en mi zona voy hacia ella
+	/** Si la pelota entra en mi zona voy hacia ella **/
 	private void stepGoto(){
 		
 		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 		 
-		 Vec2 balon = myRobotAPI.getBall();
-	     if (balon.r < myRobotAPI.getPlayerRadius() * 6) 
-	    	 state = State.KICK;
+		Vec2 balon = myRobotAPI.getBall();
+	    if (balon.r < myRobotAPI.getPlayerRadius() * 6) 
+	    	state = State.KICK;
 	     
-	     // La pelota está en SU campo
-	     if(!pelotaEnMiCuadrante())
+	    // La pelota está en SU campo
+	    if(!pelotaEnMiCuadrante())
 			state = State.DEFEND;
 		 
 	}
 	
-	// una vez voy a por la pelota la lanzo hacia el otro campo, alejándola de la portería
+	/** una vez voy a por la pelota la lanzo hacia el otro campo, alejándola de la portería **/
 	private void stepKick(){
 		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal()); 
 		if (myRobotAPI.canKick())
@@ -130,22 +141,24 @@ public class Defender extends Behaviour{
 		state = State.DEFEND;
 	}
 	
-	private boolean pelotaEnMiCampo(){
-		Vec2 coordPelota = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
-		return ( coordPelota.x * myRobotAPI.getFieldSide() ) > 0;
+	/** Me he quedado bloqueado y trato de desbloquearme **/
+	private void stepBlock() {
+		RobotUtils.salirBloqueo(myRobotAPI);
+		if(!pelotaEnMiCuadrante())
+			state = State.DEFEND;
+	   	else
+	   		state = State.GOTO;
 	}
 	
+    /** Indica si la pelota está en el trozo del campo que cubre el defensa **/
 	private boolean pelotaEnMiCuadrante(){
 		Vec2 coordPelota = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
 		if(zona == 0)
-			return pelotaEnMiCampo() && (coordPelota.y > 0);
+			return RobotUtils.pelotaEnMiCampo(myRobotAPI) && (coordPelota.y > 0);
 		else
-			return pelotaEnMiCampo() && (coordPelota.y < 0);
+			return RobotUtils.pelotaEnMiCampo(myRobotAPI) && (coordPelota.y < 0);
 	}
 	
-	private Vec2 goToPosition(Vec2 position, Vec2 destination) {
-	      return new Vec2(destination.x - position.x, destination.y - position.y);
-	}
-	
-}// StealTheBall1
+}
+
 

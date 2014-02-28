@@ -2,6 +2,13 @@ package equipo5;
 
 import java.util.concurrent.ExecutionException;
 
+import jcolibri.cbrcore.CBRCase;
+import jcolibri.cbrcore.CBRCaseBase;
+import jcolibri.cbrcore.CBRQuery;
+import jcolibri.cbrcore.Connector;
+import jcolibri.connector.DataBaseConnector;
+import jcolibri.exception.InitializingException;
+
 /**
  * main class of the project
  */
@@ -59,7 +66,7 @@ public class CasesCBR implements StandardCBRApplication
 			// Nos creamos un conector de la base de datos
 			_connector = new DataBaseConnector();
 			// Inicializamos el conector de la base de datos con el "config file"
-			_connector.initFromXMLfile(jcolibri.utils.FileIO.findFile("jcolibri/examples/TravelRecommender/databaseconfig.xml"));
+			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("jcolibri/examples/TravelRecommender/databaseconfig.xml"));
 		}catch (Exception e){
 			throw new ExecutionException(e);
 		}
@@ -74,13 +81,16 @@ public class CasesCBR implements StandardCBRApplication
 	/** Carga los casos en memoria **/
 	@Override
 	public CBRCaseBase preCycle() throws ExecutionException {
-		// TODO Auto-generated method stub
 		
 		// Cargamos los casos del conector a la base de datos
-		_casebase.init(_connector);
+		try {
+			_casebase.init(_connector);
+		} catch (InitializingException e) {
+			e.printStackTrace();
+		}
 		java.util.Collection<CBRCase> cases = _casebase.getCases();
 		for(CBRCase c: cases)
-			system.out.printl(c);		
+			System.out.println(c);		
 		return _casebase;
 	}
 
