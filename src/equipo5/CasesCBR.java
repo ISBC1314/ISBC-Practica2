@@ -2,12 +2,24 @@ package equipo5;
 
 import java.util.concurrent.ExecutionException;
 
+import jcolibri.casebase.LinealCaseBase;
+import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.connector.DataBaseConnector;
 import jcolibri.exception.InitializingException;
+import jcolibri.method.retrieve.RetrievalResult;
+import jcolibri.method.retrieve.NNretrieval.NNConfig;
+import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
+import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
+import jcolibri.method.retrieve.selection.SelectCases;
+import jcolibri.test.recommenders.travelData.TravelDescription;
+
+import com.sun.java.util.collections.Collection;
 
 /**
  * main class of the project
@@ -47,8 +59,8 @@ public class CasesCBR implements StandardCBRApplication
 	 	· O usar los ya implementados: DDBB, TXT y Onto. Se inicializan a través de un archivo XML
 	jCOLIBRI2 incluye uno implementado en Java: HSQLDB
 	*/
-	Connector _connector;
-	CBRCaseBase _casebase;
+	Connector _connector;	// Debe mapear cada atributo del caso en una columna de la BBDD
+	CBRCaseBase _caseBase;
 	
 	
 /* Metodos de la interfaz */
@@ -67,6 +79,9 @@ public class CasesCBR implements StandardCBRApplication
 			_connector = new DataBaseConnector();
 			// Inicializamos el conector de la base de datos con el "config file"
 			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("jcolibri/examples/TravelRecommender/databaseconfig.xml"));
+			// Creamos un caso base lineal para la organización en memoria
+			_caseBase = new LinealCaseBase();
+			
 		}catch (Exception e){
 			throw new ExecutionException(e);
 		}
@@ -84,14 +99,14 @@ public class CasesCBR implements StandardCBRApplication
 		
 		// Cargamos los casos del conector a la base de datos
 		try {
-			_casebase.init(_connector);
+			_caseBase.init(_connector);
 		} catch (InitializingException e) {
 			e.printStackTrace();
 		}
-		java.util.Collection<CBRCase> cases = _casebase.getCases();
+		java.util.Collection<CBRCase> cases = _caseBase.getCases();
 		for(CBRCase c: cases)
 			System.out.println(c);		
-		return _casebase;
+		return _caseBase;
 	}
 
 	
@@ -103,8 +118,27 @@ public class CasesCBR implements StandardCBRApplication
 	/** Recibe la consulta y ejecuta el ciclo CBR: Recuperar, Reutilizar, Revisar y Retener **/
 	@Override
 	public void cycle(CBRQuery query) throws ExecutionException {
-		// TODO Auto-generated method stub
 		
+		// Primero configuramos el KNN
+		NNConfig simConfig = new NNConfig();
+		
+		// Ajustamos la función de similitud GLOBAL para la descripción del caso
+		simConfig.setDescriptionSimFunction(new Average());
+		
+		// equal es la funcion de similitud LOCAL
+		// Asignamos a cada atributo la funcion de similitud que va a utilizar
+		simConfig.addMapping(new Attribute("GolesFavor", SoccerBotsDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("GolesContra", SoccerBotsDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("Score", SoccerBotsDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("TiempoFalta", SoccerBotsDescription.class), new Equal());
+
+		java.util.Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+		
+		eval = SelectCases.selectTopKRR(eval,5);
+		
+		System.out.println("Retrieved cases:");
+		for(RetrievalResult nse: eval)
+			System.out.println(nse);
 	}
 
 	
@@ -116,7 +150,7 @@ public class CasesCBR implements StandardCBRApplication
 	@Override
 	public void postCycle() throws ExecutionException {
 		// TODO Auto-generated method stub
-		this._casebase.close();
+		this._caseBase.close();
 	}
 	
 }// CasesCBR

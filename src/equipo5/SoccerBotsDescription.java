@@ -100,10 +100,7 @@ public class SoccerBotsDescription implements CaseComponent{
 
 	@Override
 	public Attribute getIdAttribute() {
-		return new 
-				Attribute(
-				"id", 
-				 SoccerBotsDescription.class);
+		return new Attribute("id", SoccerBotsDescription.class);
 	}
 
 }

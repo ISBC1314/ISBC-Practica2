@@ -100,9 +100,6 @@ public class Entrenador extends TeamManager {
 	
 	private void stepDefensivo() {
 		
-		
-			
-		
 		_players[portero].setBehaviour(behaviours[1]);// Portero
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
 		_players[porteroSustituto].setBehaviour(behaviours[5]);// Wander
