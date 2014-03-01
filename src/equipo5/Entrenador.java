@@ -77,6 +77,8 @@ public class Entrenador extends TeamManager {
 	@Override
 	protected void onTakeStep() {
 
+		/** Aquí creo que deberíamos hacer el run() del CBR para que calcule el comportamiento de cada jugador **/
+		
 		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione
 		state = calculaSigEstado();
 

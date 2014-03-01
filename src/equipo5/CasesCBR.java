@@ -1,5 +1,6 @@
 package equipo5;
 
+import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
 import jcolibri.casebase.LinealCaseBase;
@@ -14,12 +15,10 @@ import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.selection.SelectCases;
-import jcolibri.test.recommenders.travelData.TravelDescription;
 
-import com.sun.java.util.collections.Collection;
+//import com.sun.java.util.collections.Collection;
 
 /**
  * main class of the project
@@ -48,6 +47,14 @@ public class CasesCBR implements StandardCBRApplication
 	 
 	*/
 	
+	private static final double[] DEFAULT_WEIGHTS = {
+		//WeightVector.COMPORTAMIENTOS_JUGADOR,
+	    WeightVector.GOLES_CONTRA,
+	    WeightVector.GOLES_FAVOR,
+	    WeightVector.SCORE,
+	    WeightVector.TIEMPO_QUE_FALTA
+	};	
+	
 /* Atributos */
 	
 	/* El "Connector":
@@ -58,6 +65,15 @@ public class CasesCBR implements StandardCBRApplication
 	Connector _connector;	// Debe mapear cada atributo del caso en una columna de la BBDD
 	CBRCaseBase _caseBase;
 	
+	private WeightVector weightVector;
+	
+	
+	public CasesCBR(){
+		weightVector = new WeightVector();
+		for(int i = 0; i < 4; i++){
+			weightVector.pesos[i] = DEFAULT_WEIGHTS[i];
+		}
+	}
 	
 /* Metodos de la interfaz */
 	
@@ -70,6 +86,7 @@ public class CasesCBR implements StandardCBRApplication
 	@Override
 	public void configure() throws ExecutionException {
 		
+		// TODO -> Conectar el _connector con la BBDD, no se como hacerlo
 		try{
 			// Nos creamos un conector de la base de datos
 			_connector = new DataBaseConnector();
@@ -96,12 +113,13 @@ public class CasesCBR implements StandardCBRApplication
 		// Cargamos los casos del conector a la base de datos
 		try {
 			_caseBase.init(_connector);
-		} catch (InitializingException e) {
-			e.printStackTrace();
-		}
-		java.util.Collection<CBRCase> cases = _caseBase.getCases();
-		for(CBRCase c: cases)
-			System.out.println(c);		
+		
+			Collection<CBRCase> cases = _caseBase.getCases();
+			for(CBRCase c: cases)
+				System.out.println(c);		
+		
+		} catch (InitializingException e) { e.printStackTrace(); }
+		
 		return _caseBase;
 	}
 
@@ -121,31 +139,62 @@ public class CasesCBR implements StandardCBRApplication
 		// Ajustamos la función de similitud GLOBAL para la descripción del caso
 		simConfig.setDescriptionSimFunction(new Average());
 		
-		// equal es la funcion de similitud LOCAL
-		// Asignamos a cada atributo la funcion de similitud que va a utilizar
-		simConfig.addMapping(new Attribute("golesFavor", SoccerBotsDescription.class), new Equal());
-		simConfig.addMapping(new Attribute("golesContra", SoccerBotsDescription.class), new Equal());
-		simConfig.addMapping(new Attribute("score", SoccerBotsDescription.class), new Equal());
-		simConfig.addMapping(new Attribute("tiempoQueFalta", SoccerBotsDescription.class), new Equal());
-
-		java.util.Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+		// le asignamos la funcion de similitud local a cada atributo
+		localSimConfig(simConfig);
 		
+		// ejecutamos NN
+		System.out.println("Executing KNN...");
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+		
+		// Seleccionamos las clases
+		System.out.println("Selecting the K cases...");
 		eval = SelectCases.selectTopKRR(eval,5);
 		
+		// Imprimimos el resultado
 		System.out.println("Retrieved cases:");
 		for(RetrievalResult nse: eval)
 			System.out.println(nse);
+	}
+	
+	// Asignamos a cada atributo la funcion de similitud que va a utilizar
+	private void localSimConfig(NNConfig simConfig) {
+		
+		// TODO -> Ponerle una funcion de similitud a cada atributo, he puesto el new Interval para que compile
+
+		// Goles a favor:
+		System.out.println("Setting golesFavor ...");
+		Attribute golesFavor = new Attribute("golesFavor", SoccerBotsDescription.class);
+		simConfig.addMapping(golesFavor, new Interval(3));		// le damos la funcion de similitud
+		simConfig.setWeight(golesFavor, weightVector.pesos[0]);
+		
+		// Goles en contra
+		System.out.println("Setting golesContra ...");
+		Attribute golesContra = new Attribute("golesContra", SoccerBotsDescription.class);
+		simConfig.addMapping(golesContra, new Interval(3));	// le damos la funcion de similitud
+		simConfig.setWeight(golesContra, weightVector.pesos[1]);
+		
+		// Score
+		System.out.println("Setting score ...");
+		Attribute score = new Attribute("score", SoccerBotsDescription.class);
+		simConfig.addMapping(score, new Interval(6));			// le damos la funcion de similitud
+		simConfig.setWeight(score, weightVector.pesos[2]);
+		
+		// Tiempo que falta
+		System.out.println("Setting tiempoQueFalta ...");
+		Attribute tiempoQueFalta = new Attribute("tiempoQueFalta", SoccerBotsDescription.class);
+		simConfig.addMapping(tiempoQueFalta, new Interval(30));	// le damos la funcion de similitud
+		simConfig.setWeight(tiempoQueFalta, weightVector.pesos[3]);
+		
 	}
 
 	
 					/*****************/
 					/*** POSTCYCLE ***/
 					/*****************/
-	
+
 	/** Libera los recursos y finaliza **/
 	@Override
 	public void postCycle() throws ExecutionException {
-		// TODO Auto-generated method stub
 		this._caseBase.close();
 	}
 	
