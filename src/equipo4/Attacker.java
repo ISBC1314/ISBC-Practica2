@@ -28,11 +28,6 @@ public class Attacker extends Behaviour{
 	public void onInit(RobotAPI arg0) {	
 		this.state = State.GOTO;
 		
-		//double valorRandom = Math.random()*0.2;
-		//int signoRandom = ((int) (Math.random()*10)) % 2 == 0 ? 1 : -1;  
-		
-		//porteriaContraria =  myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal());
-		//porteriaContraria.y = + (valorRandom * signoRandom);
 	}
 
 	public int takeStep() {
@@ -49,9 +44,7 @@ public class Attacker extends Behaviour{
 			
 			case FORWARD: {
 				
-				myRobotAPI.setDisplayString("" + porteriaContraria);
-				
-				myRobotAPI.setBehindBall(myRobotAPI.toEgocentricalCoordinates(myRobotAPI.getOpponentsGoal()));
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				break;
 			}
 		

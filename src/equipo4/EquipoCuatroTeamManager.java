@@ -110,11 +110,11 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 
 		if (RobotUtils.pelotaEnMiCampo(myRobotAPI)){
 			//Si el portero esta bloqueado. Se pone al sustituto
-			/*if(_players[portero].getRobotAPI().opponentBlocking()){
+			if(_players[portero].getRobotAPI().opponentBlocking()){
 				int aux = portero;
 				portero = atackWander1;
 				atackWander1 = aux;
-			}*/
+			}
 			
 			return State.DEFENSIVO;
 		}
