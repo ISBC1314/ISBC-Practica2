@@ -31,16 +31,31 @@ public final class RobotUtils {
    	 * Indica si el jugador está en su área
    	 */ 
     public static boolean estoyEnMiArea (RobotAPI robot) {
-    	return Math.abs(robot.getPosition().x) > 1.145 && Math.abs(robot.getPosition().y) < 0.4 ;
-    	//FIXME No tiene en cuenta el campo en el que estamos jugando
+    	if(robot.getFieldSide() == robot.EAST_FIELD)
+    		return robot.getPosition().x > 1.145 && Math.abs(robot.getPosition().y) < 0.4 ;
+    	else
+    		return robot.getPosition().x < -1.145 && Math.abs(robot.getPosition().y) < 0.4 ;
+    }
+    
+    /**
+   	 * Indica si el jugador en el area contraria
+   	 */ 
+    public static boolean estoyEnAreaContraria (RobotAPI robot) {
+    	if(robot.getFieldSide() == robot.EAST_FIELD)
+    		return robot.getPosition().x < -1.2 && Math.abs(robot.getPosition().y) < 0.5 ;
+    	else
+    		return robot.getPosition().x > 1.2 && Math.abs(robot.getPosition().y) < 0.5 ;
     }
     
     /**
    	 * Indica si la pelota está dentro de mi área
    	 */ 
     public static boolean pelotaEnMiArea (RobotAPI robot) {
-    	return Math.abs(robot.toFieldCoordinates(robot.getBall()).x) > 1.1 && Math.abs(robot.toFieldCoordinates(robot.getBall()).y) < 0.5 ;
-    	//FIXME No tiene en cuenta el campo en el que estamos jugando
+    	Vec2 ball = robot.toFieldCoordinates(robot.getBall());
+    	if(robot.getFieldSide() == robot.EAST_FIELD)
+    		return ball.x > 1.1 && Math.abs(ball.y) < 0.5 ;
+    	else
+    		return ball.x < -1.1 && Math.abs(ball.y) < 0.5 ;
     }
     
 	/**

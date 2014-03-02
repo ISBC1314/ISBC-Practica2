@@ -37,6 +37,9 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 	private int defensaAbajo = 3;
 	private int atackWander2 = 4;
 	
+	private int behaviourAtackWander1 = 5;
+	private int behaviourAtackWander2 = 5;
+	
 
 	@Override
 	public Behaviour[] createBehaviours() {
@@ -90,9 +93,9 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 	private void stepOfensivo() {
 		_players[portero].setBehaviour(behaviours[1]);// Portero
 		_players[defensaArriba].setBehaviour(behaviours[2]);// Defensa Arriba
-		_players[atackWander1].setBehaviour(behaviours[6]);// Attaker
+		_players[atackWander1].setBehaviour(behaviours[7]);// Attaker
 		_players[defensaAbajo].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[atackWander2].setBehaviour(behaviours[6]);// Attacker
+		_players[atackWander2].setBehaviour(behaviours[0]);// Attacker
 			
 	}
 	
@@ -100,9 +103,9 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 
 		_players[portero].setBehaviour(behaviours[1]);// Portero
 		_players[defensaArriba].setBehaviour(behaviours[2]);// Defensa Arriba
-		_players[atackWander1].setBehaviour(behaviours[5]);// Wander
+		_players[atackWander1].setBehaviour(behaviours[7]);// Wander
 		_players[defensaAbajo].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[atackWander2].setBehaviour(behaviours[5]);// Wander
+		_players[atackWander2].setBehaviour(behaviours[0]);// Wander
 		
 	}
 
@@ -110,17 +113,20 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 
 		if (RobotUtils.pelotaEnMiCampo(myRobotAPI)){
 			//Si el portero esta bloqueado. Se pone al sustituto
-			if(_players[portero].getRobotAPI().opponentBlocking()){
+			/*if(_players[portero].getRobotAPI().opponentBlocking()){
 				int aux = portero;
 				portero = atackWander1;
 				atackWander1 = aux;
-			}
+			}*/
+			
+			behaviourAtackWander1 = 5;
+			behaviourAtackWander2 = 5;
 			
 			return State.DEFENSIVO;
 		}
 		else{
 			
-			if(estadoActual == State.DEFENSIVO && _players[defensaArriba].getRobotAPI().closestToBall()){
+			/*if(estadoActual == State.DEFENSIVO && _players[defensaArriba].getRobotAPI().closestToBall()){
 				int aux = defensaArriba;
 				defensaArriba = atackWander1;
 				atackWander1 = aux;
@@ -130,6 +136,18 @@ public final class EquipoCuatroTeamManager extends TeamManager {
 				int aux = defensaAbajo;
 				defensaAbajo = atackWander1;
 				atackWander1 = aux;
+			}*/
+			
+			
+			//Si un atacante tiene la pelota el otro bloquea al portero
+			behaviourAtackWander1 = 6;
+			behaviourAtackWander2 = 6;
+			
+			if(_players[atackWander1].getRobotAPI().closestToBall()){
+				behaviourAtackWander2 = 7;
+			}
+			else if(_players[atackWander2].getRobotAPI().closestToBall()){
+				behaviourAtackWander1 = 7;
 			}
 			
 			return State.OFENSIVO;

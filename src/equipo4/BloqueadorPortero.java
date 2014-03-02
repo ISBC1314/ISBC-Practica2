@@ -76,17 +76,17 @@ public final class BloqueadorPortero extends Behaviour {
     	robot.blockGoalKeeper();
     }
 
-    private void stepSalirBloqueo() { //TODO Funciona muy mal
+    private void stepSalirBloqueo() { 
 
    	 RobotUtils.salirBloqueo(robot);
    }
     
     private State calculaSigEstado(){
     	
-    	if(RobotUtils.estoyBloqueado(robot) && !RobotUtils.estoyEnMiArea(robot))
+    	if(RobotUtils.estoyBloqueado(robot) && !RobotUtils.estoyEnAreaContraria(robot))
     		return State.BLOCKED;
     	
-    	if(RobotUtils.estoyEnMiArea(robot))
+    	if(RobotUtils.estoyEnAreaContraria(robot))
     		return State.BLOQUEAR;
 
     	return State.IR_PORTERIA_CONTRARIA;   	

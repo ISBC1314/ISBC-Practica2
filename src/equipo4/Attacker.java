@@ -123,5 +123,6 @@ public class Attacker extends Behaviour{
 			return false;
 		}
 	}
+	
 
 }
