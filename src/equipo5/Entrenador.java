@@ -1,13 +1,15 @@
 package equipo5;
 
+import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.CBRQuery;
-import jcolibri.exception.ExecutionException;
-import jcolibri.test.recommenders.travelData.TravelDescription;
+import jcolibri.evaluation.evaluators.HoldOutEvaluator;
 import jcolibri.test.test1.Test1;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
-import equipo4.Attacker;
+
+
+/*import equipo4.Attacker;
 import equipo4.BloqueadorAtacante;
 import equipo4.BloqueadorPortero;
 import equipo4.Defender;
@@ -15,7 +17,7 @@ import equipo4.GoToBall;
 import equipo4.NopBehaviour;
 import equipo4.PorteroBehaviour;
 import equipo4.RobotUtils;
-import equipo4.Wander;
+import equipo4.Wander;*/
 
 public class Entrenador extends TeamManager { 
 	 
@@ -44,6 +46,8 @@ public class Entrenador extends TeamManager {
 	
 	private int portero = 0;
 	private int porteroSustituto = 2;
+	
+	StandardCBRApplication cbrApp;
 
 	@Override
 	public Behaviour[] createBehaviours() {
@@ -78,6 +82,16 @@ public class Entrenador extends TeamManager {
 	protected void onTakeStep() {
 
 		/** Aquí creo que deberíamos hacer el run() del CBR para que calcule el comportamiento de cada jugador **/
+
+		/*
+		HoldOutEvaluator eval = new HoldOutEvaluator();
+		eval.init(cbrApp);
+		
+		run();
+		*/
+
+		/** ------------ **/
+		
 		
 		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione
 		state = calculaSigEstado();

@@ -86,7 +86,7 @@ object EDU.gatech.cc.is.simulation.ObstacleInvisibleSim -2.047 -1.4396 0 1.0
 // from getting jumpy on slow machines, or when/if your process gets 
 // swapped out. 
 
-maxtimestep 11 
+maxtimestep 17 
 
 //====== 
 // TIMEOUT 
@@ -157,19 +157,19 @@ xffffff x000000 3
 // numbers according to the order in which they are listed here. 
 //======WEST TEAM====== 
 westname WestTeam 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo4.EquipoCuatroTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -1.2 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo4.EquipoCuatroTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -.5 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo4.EquipoCuatroTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 .5 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo4.EquipoCuatroTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo4.EquipoCuatroTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 -.5 0 x3399ff x444444 1 
 
