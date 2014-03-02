@@ -68,6 +68,8 @@ public final class PorteroBehaviour extends Behaviour {
 		        break;
 		    }   
    	 }
+		if( myRobotAPI.getMatchRemainingTime() == 1000 )
+			RobotUtils.esbribirResultadoFichero(robot);
 
         robot.setDisplayString("PORTERO| "+state);
         return RobotAPI.ROBOT_OK;
@@ -91,17 +93,13 @@ public final class PorteroBehaviour extends Behaviour {
     	double irX = 1.3; // Nos mantenemos dentro del área. 
     	
     	Vec2 ir = new Vec2(irX*miCampo,irY);
-    	RobotUtils.moverJugadorFrenando(robot, ir);	 
-    	
-    	if (robot.canKick())
-    		robot.kick();	
+    	RobotUtils.moverJugadorFrenando(robot, ir);	   	
     }
     
     private void stepDefendArea () { //DEfiende la porteria cuando la pelota esta dentro del area 
     	
-    	robot.setSpeed(0.5);
-    	//robot.setSteerHeading(robot.getBall().t);
-    	myRobotAPI.setBehindBall(myRobotAPI.getBall());
+    	robot.setSpeed(0.3);
+    	robot.setSteerHeading(robot.getBall().t);
     	if (robot.canKick())
     		robot.kick();	
     }
@@ -120,8 +118,8 @@ public final class PorteroBehaviour extends Behaviour {
     	if(!RobotUtils.estoyEnMiArea(robot))
     		return  State.IR_PORTERIA;
     	
-    	//if(robot.closestToBall() && RobotUtils.estoyEnMiArea(robot) && RobotUtils.pelotaEnMiArea(robot))
-    	//	return  State.DEFEND_AREA;
+    	if(RobotUtils.pelotaEnMiArea(robot))
+    		return  State.DEFEND_AREA;
 
     	return State.DEFEND;   	
     }

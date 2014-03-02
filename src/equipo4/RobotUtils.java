@@ -125,7 +125,7 @@ public final class RobotUtils {
       	         	
         	Vec2 myPos=robot.getPosition();
         	double distancia = Math.sqrt(Math.hypot(myPos.x - pos.x ,  myPos.y - pos.y));
-        	double velocidad = distancia < 1.0 ? distancia*1.15 : 1.0;
+        	double velocidad = distancia < 1.0 ? distancia*1.05 : 1.0;
         	robot.setSpeed(velocidad);
         	
         	moverJugador(robot,pos);	       	
