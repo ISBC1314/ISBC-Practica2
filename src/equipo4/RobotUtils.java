@@ -1,11 +1,5 @@
 package equipo4;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import teams.ucmTeam.RobotAPI;
 import EDU.gatech.cc.is.util.Vec2;
 
@@ -42,9 +36,9 @@ public final class RobotUtils {
    	 */ 
     public static boolean estoyEnAreaContraria (RobotAPI robot) {
     	if(robot.getFieldSide() == robot.EAST_FIELD)
-    		return robot.getPosition().x < -1.2 && Math.abs(robot.getPosition().y) < 0.5 ;
+    		return robot.getPosition().x < -1.1 && Math.abs(robot.getPosition().y) < 0.50 ;
     	else
-    		return robot.getPosition().x > 1.2 && Math.abs(robot.getPosition().y) < 0.5 ;
+    		return robot.getPosition().x > 1.1 && Math.abs(robot.getPosition().y) < 0.50 ;
     }
     
     /**
@@ -132,6 +126,7 @@ public final class RobotUtils {
     	  robot.setSteerHeading(resta.t);  	
       }
       
+      
       /**
     	 * Dirige un jugador a la posicion indicada
     	 * Cuanto más cerca esté el jugador el punto al que quiere llegar, más despacio irá
@@ -161,39 +156,22 @@ public final class RobotUtils {
     	}
     	
     	
-    	/**Escribie el resultado del partido en un fichero
-    	 */
-    	public static void esbribirResultadoFichero(RobotAPI robot){
-    		
-    		 FileWriter fichero = null;
-    	        PrintWriter pw = null;
-    	        try
-    	        {
-    	            fichero = new FileWriter("./resultados.txt",true);
-    	            pw = new PrintWriter(fichero);
-	                pw.print("Mis Goles ");
-	                pw.print(robot.getMyScore());
-	                pw.print("  Goles Contrarios ");
-	                pw.print(robot.getOpponentScore());
-	                
-	                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	                Date date = new Date();
-	                pw.println ("   "+ dateFormat.format(date));
-    	 
-    	        } catch (Exception e) {
-    	            e.printStackTrace();
-    	        } finally {
-    	           try {
-    	           // Nuevamente aprovechamos el finally para 
-    	           // asegurarnos que se cierra el fichero.
-    	           if (null != fichero)
-    	              fichero.close();
-    	           } catch (Exception e2) {
-    	              e2.printStackTrace();
-    	           }
-    	        }
-    		
-    	}
+    	/**Indica si el equipo contrario tiene un portero*/
+    	
+    	public static boolean hayPorteroContrario(RobotAPI robot){
+        	
+        	Vec2[] oponentes = robot.getOpponents();
+        	for(int i=0; i< oponentes.length ; i++){
+        		oponentes[i] = robot.toFieldCoordinates(oponentes[i]);
+        	}
+        	
+        	Vec2 porteroContrario =  robot.closestTo(oponentes, robot.toFieldCoordinates(robot.getOpponentsGoal()));
+        	
+        	if(robot.getFieldSide() == robot.EAST_FIELD)
+        		return porteroContrario.x < -1.145;
+        	else
+        		return porteroContrario.x > 1.145;
+        }
         	
    
     private RobotUtils () {

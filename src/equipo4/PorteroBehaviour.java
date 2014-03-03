@@ -68,8 +68,6 @@ public final class PorteroBehaviour extends Behaviour {
 		        break;
 		    }   
    	 }
-		if( myRobotAPI.getMatchRemainingTime() == 1000 )
-			RobotUtils.esbribirResultadoFichero(robot);
 
         robot.setDisplayString("PORTERO| "+state);
         return RobotAPI.ROBOT_OK;

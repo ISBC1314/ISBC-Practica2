@@ -2,15 +2,19 @@ package equipo4;
 
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
+import EDU.gatech.cc.is.util.Vec2;
 
 public final class BloqueadorPortero extends Behaviour {
 
     private static enum State {
         /**Se dirige a la porteria contraria */
-        IR_PORTERIA_CONTRARIA,
+        IR_HACIA_PORTERO,
 
         /** Bloquea al portero contrario */
         BLOQUEAR,
+        
+        /** Cuando no hay portero contrario */
+        ESPERAR,
         
         /** Indica si el jugador esta bloqueado*/
         BLOCKED;
@@ -19,6 +23,7 @@ public final class BloqueadorPortero extends Behaviour {
     private RobotAPI robot;
 
     private State state;
+    
 
     @Override
     public void configure () {
@@ -33,7 +38,7 @@ public final class BloqueadorPortero extends Behaviour {
     @Override
     public void onInit (RobotAPI robot) {
         this.robot = robot;
-        state = State.IR_PORTERIA_CONTRARIA;
+        state = State.IR_HACIA_PORTERO;
     }
 
     @Override
@@ -47,12 +52,16 @@ public final class BloqueadorPortero extends Behaviour {
 		state = calculaSigEstado();	
 		
 		switch (state) {
-		    case IR_PORTERIA_CONTRARIA: {
-		        stepIrPorteriaContraria();
+		    case IR_HACIA_PORTERO: {
+		        stepIrPorteroContrario();
 		        break;
 		    }
 		    case BLOQUEAR: {
 		        stepBloquear();
+		        break;
+		    }
+		    case ESPERAR: {
+		        stepEsperar();
 		        break;
 		    }
 		    case BLOCKED: {
@@ -61,19 +70,29 @@ public final class BloqueadorPortero extends Behaviour {
 		    }
    	 }
 
-        robot.setDisplayString("BLOCK PORTERO | " + state);
+        robot.setDisplayString("POR-BLOCK | " + state);
         return RobotAPI.ROBOT_OK;
     }
 
-    private void stepIrPorteriaContraria () { //Ir a la porteria contraria
+    private void stepIrPorteroContrario () { //Ir hacia el portero contrario
     	
-    	robot.setSteerHeading(robot.getOpponentsGoal().t);
+    	Vec2 porteroContrario = porteroContrario();
+    	robot.setDisplayString(" " +	porteroContrario);
+    	RobotUtils.moverJugador(robot, porteroContrario);
      
     }
 
     private void stepBloquear () { //Bloquea al portero contrario
     	
+    	
     	robot.blockGoalKeeper();
+    }
+    
+    private void stepEsperar () { //No hay portero contrario
+    	
+    	Vec2 esperar = new Vec2 (robot.getFieldSide() * 0.8 * -1 ,0.5);
+    	RobotUtils.moverJugadorFrenando(robot, esperar);
+    	
     }
 
     private void stepSalirBloqueo() { 
@@ -83,14 +102,27 @@ public final class BloqueadorPortero extends Behaviour {
     
     private State calculaSigEstado(){
     	
-    	if(RobotUtils.estoyBloqueado(robot) && !RobotUtils.estoyEnAreaContraria(robot))
-    		return State.BLOCKED;
-    	
-    	if(RobotUtils.estoyEnAreaContraria(robot))
-    		return State.BLOQUEAR;
 
-    	return State.IR_PORTERIA_CONTRARIA;   	
+    	//if(!RobotUtils.hayPorteroContrario(robot))
+    		//return State.ESPERAR;
+
+    	return State.IR_HACIA_PORTERO;   	
     }
+    
+  
+    
+    private Vec2 porteroContrario(){
+    	
+    	Vec2[] oponentes = robot.getOpponents();
+    	
+    	for(int i=0; i< oponentes.length ; i++){
+    		oponentes[i] = robot.toFieldCoordinates(oponentes[i]);
+    	}
+    		
+    	return robot.closestTo(oponentes, robot.toFieldCoordinates(robot.getOpponentsGoal()));
+    }
+    
+
 
 
 }
