@@ -81,7 +81,7 @@ public final class DefensaSolo extends Behaviour {
     	int miCampo = robot.getFieldSide();
     	Vec2 pelota = myRobotAPI.toFieldCoordinates(myRobotAPI.getOpponentsGoal());
     	
-    	double irY = robot.toFieldCoordinates(robot.getBall()).y*0.5 / 0.7625; // Seguimos la posicion Y de la pelota. Pero intentando no salir del área
+    	double irY = robot.toFieldCoordinates(robot.getBall()).y*0.5 / 0.7625; // Seguimos la posicion Y de la pelota. Pero intentando no salir del area
     	
     	double irX;
     	double distancia = RobotUtils.distanciaEntre(pelota, new Vec2(pelota.x,0));

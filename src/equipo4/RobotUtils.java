@@ -22,7 +22,7 @@ public final class RobotUtils {
     }
     
     /**
-   	 * Indica si el jugador está en su área
+   	 * Indica si el jugador esta en su area
    	 */ 
     public static boolean estoyEnMiArea (RobotAPI robot) {
     	if(robot.getFieldSide() == robot.EAST_FIELD)
@@ -42,7 +42,7 @@ public final class RobotUtils {
     }
     
     /**
-   	 * Indica si la pelota está dentro de mi área
+   	 * Indica si la pelota esta dentro de mi area
    	 */ 
     public static boolean pelotaEnMiArea (RobotAPI robot) {
     	Vec2 ball = robot.toFieldCoordinates(robot.getBall());
@@ -63,7 +63,7 @@ public final class RobotUtils {
     
     
     /**
-   	 * Indica si un jugador está bloqueado
+   	 * Indica si un jugador esta bloqueado
    	 */ 
     public static boolean estoyBloqueado (RobotAPI robot) {
     	return robot.opponentBlocking() || robot.teammateBlocking(); 
@@ -129,7 +129,7 @@ public final class RobotUtils {
       
       /**
     	 * Dirige un jugador a la posicion indicada
-    	 * Cuanto más cerca esté el jugador el punto al que quiere llegar, más despacio irá
+    	 * Cuanto mas cerca este el jugador el punto al que quiere llegar, mas despacio ira
     	 */ 
         public static void moverJugadorFrenando(RobotAPI robot, Vec2 pos){
       	         	

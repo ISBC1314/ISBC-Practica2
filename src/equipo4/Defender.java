@@ -96,7 +96,7 @@ public class Defender extends Behaviour{
 		// No hacemos nada
 	}	
 
-	/** Si la pelota no está en mi zona me quedo en mi sitio defendiendo **/
+	/** Si la pelota no esta en mi zona me quedo en mi sitio defendiendo **/
 	private void stepDefend(){
 		
 		double nuevaX = 0.8 * myRobotAPI.getFieldSide();
@@ -112,7 +112,7 @@ public class Defender extends Behaviour{
 		myRobotAPI.setSteerHeading(destino.t);
 		myRobotAPI.setSpeed(1);
 		
-		// La pelota está en MI zona
+		// La pelota esta en MI zona
         if(pelotaEnMiCuadrante())
 			state = State.GOTO;
 	}
@@ -130,13 +130,13 @@ public class Defender extends Behaviour{
 	    if (balon.r < myRobotAPI.getPlayerRadius() * 6) 
 	    	state = State.KICK;
 	     
-	    // La pelota está en SU campo
+	    // La pelota esta en SU campo
 	    if(!pelotaEnMiCuadrante())
 			state = State.DEFEND;
 		 
 	}
 	
-	/** una vez voy a por la pelota la lanzo hacia el otro campo, alejándola de la portería **/
+	/** una vez voy a por la pelota la lanzo hacia el otro campo, alejandola de la porteria **/
 	private void stepKick(){
 		myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal()); 
 		if (myRobotAPI.canKick())
@@ -154,7 +154,7 @@ public class Defender extends Behaviour{
 	   		state = State.GOTO;
 	}
 	
-    /** Indica si la pelota está en el trozo del campo que cubre el defensa **/
+    /** Indica si la pelota esta en el trozo del campo que cubre el defensa **/
 	private boolean pelotaEnMiCuadrante(){
 		Vec2 coordPelota = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
 		if(zona == 0)
