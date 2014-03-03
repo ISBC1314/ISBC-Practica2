@@ -48,7 +48,11 @@ public class CasesCBR implements StandardCBRApplication
 	*/
 	
 	private static final double[] DEFAULT_WEIGHTS = {
-		//WeightVector.COMPORTAMIENTOS_JUGADOR,
+		WeightVector.COMPORTAMIENTO_JUGADOR1,
+		WeightVector.COMPORTAMIENTO_JUGADOR2,
+		WeightVector.COMPORTAMIENTO_JUGADOR3,
+		WeightVector.COMPORTAMIENTO_JUGADOR4,
+		WeightVector.COMPORTAMIENTO_JUGADOR5,
 	    WeightVector.GOLES_CONTRA,
 	    WeightVector.GOLES_FAVOR,
 	    WeightVector.SCORE,
@@ -70,7 +74,7 @@ public class CasesCBR implements StandardCBRApplication
 	
 	public CasesCBR(){
 		weightVector = new WeightVector();
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 9; i++){
 			weightVector.pesos[i] = DEFAULT_WEIGHTS[i];
 		}
 	}
@@ -85,9 +89,13 @@ public class CasesCBR implements StandardCBRApplication
 	/** Configura la persistencia de los casos y su organización en memoria **/
 	@Override
 	public void configure() throws ExecutionException {
-		
 		// TODO -> Conectar el _connector con la BBDD, no se como hacerlo
 		try{
+			File file = new File ("./data/casesCBR.txt");
+			if (!file.exists()){
+				CasesCreator casesCreator = new CasesCreator();
+				casesCreator.go();
+			}
 			// Nos creamos un conector de la base de datos
 			_connector = new DataBaseConnector();
 			// Inicializamos el conector de la base de datos con el "config file"

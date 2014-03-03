@@ -2,7 +2,11 @@ package equipo5;
 
 public class WeightVector
 {
-	//public static final double COMPORTAMIENTOS_JUGADOR = 0.3;
+	public static final double COMPORTAMIENTO_JUGADOR1 = 0.3;
+	public static final double COMPORTAMIENTO_JUGADOR2 = 0.3;
+	public static final double COMPORTAMIENTO_JUGADOR3 = 0.3;
+	public static final double COMPORTAMIENTO_JUGADOR4 = 0.3;
+	public static final double COMPORTAMIENTO_JUGADOR5 = 0.3;
 	public static final double GOLES_FAVOR = 0.02;
 	public static final double GOLES_CONTRA = 0.2;
 	public static final double SCORE = 0.95;
@@ -12,7 +16,7 @@ public class WeightVector
 	public double[] pesos;
 
 	public WeightVector() {
-		pesos = new double[4];
+		pesos = new double[9];
 	}
 
 }
