@@ -10,6 +10,7 @@ public class SoccerBotsSolution implements CaseComponent {
 			ATACANTE,
 			DEFENSA_ARRIBA,
 			DEFENSA_ABAJO,
+			DEFENSA_SOLO,
 			GO_TO_BALL,
 			WANDER,
 			PORTERO,
