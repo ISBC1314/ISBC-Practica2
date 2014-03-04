@@ -100,7 +100,7 @@ public class Entrenador extends TeamManager {
 			singleton = false;
 		}
 
-		/** ------------ **/
+		
 		
 		state = calculaSigEstado();
 

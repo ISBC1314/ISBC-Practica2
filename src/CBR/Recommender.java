@@ -5,17 +5,17 @@ import java.util.Collection;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
+import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.connector.DataBaseConnector;
 import jcolibri.exception.InitializingException;
 import jcolibri.method.retrieve.RetrievalResult;
-import jcolibri.method.retrieve.FilterBasedRetrieval.predicates.Equal;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
-import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.selection.SelectCases;
 
@@ -77,6 +77,8 @@ public class Recommender implements StandardCBRApplication
 	
 	private WeightVector weightVector;
 	
+	private SoccerBotsSolution solucion;
+	
 	
 	public Recommender(){
 		weightVector = new WeightVector();
@@ -115,23 +117,21 @@ public class Recommender implements StandardCBRApplication
 					/*** PRECYCLE ***/
 					/****************/
 	
-	
-	/** Carga los casos en memoria **/
+
 	@Override
 	public CBRCaseBase preCycle(){
 		
-		// Cargamos los casos del conector a la base de datos
+		// Load cases from connector into the case base
 		try {
-			System.out.println("Starting preCycle()...");
 			_caseBase.init(_connector);
-			System.out.println("Ending preCycle()...");
-		/*
-			Collection<CBRCase> cases = _caseBase.getCases();
+			// Print the cases
+			java.util.Collection<CBRCase> cases = _caseBase.getCases();
 			for(CBRCase c: cases)
-				System.out.println(c);		
-		*/
-		} catch (InitializingException e) { e.printStackTrace(); }
-		
+				System.out.println(c);			
+			
+		} catch (InitializingException e) {
+			e.printStackTrace();
+		}		
 		return _caseBase;
 	}
 
@@ -161,51 +161,42 @@ public class Recommender implements StandardCBRApplication
 		eval = SelectCases.selectTopKRR(eval,n_casos);
 		
 		// Imprimimos el resultado
-		System.out.println("Retrieved cases:");
-		for(RetrievalResult nse: eval)
+		int maxValoracion = -999999;
+		SoccerBotsSolution solMax = new SoccerBotsSolution();
+		for(RetrievalResult nse: eval){
+			double confianza = nse.getEval();
+			SoccerBotsSolution sol = (SoccerBotsSolution)nse.get_case().getSolution();
+			if(maxValoracion < sol.valoracion){
+				maxValoracion = sol.valoracion;
+				solMax = sol;
+			}
 			System.out.println(nse);
+			System.out.println(sol);
+			
+		}
+		
+		solucion = solMax;
+		
+		/*System.out.println("Retrieved cases:");
+		for(RetrievalResult nse: eval)
+			System.out.println(nse);*/
 	}
 	
 	// Asignamos a cada atributo la funcion de similitud que va a utilizar
 	private void localSimConfig(NNConfig simConfig) {
-		
-		simConfig.addMapping(new Attribute("diferenciaGoles", SoccerBotsDescription.class), (LocalSimilarityFunction) new Equal());
-		simConfig.setWeight(new Attribute("diferenciaGoles", SoccerBotsDescription.class), Double.valueOf(0.5d));
-		
-		simConfig.addMapping(new Attribute("golesFavor", SoccerBotsDescription.class), (LocalSimilarityFunction) new Equal());
+				
+		simConfig.addMapping(new Attribute("golesFavor", SoccerBotsDescription.class), new Equal());
 		simConfig.setWeight(new Attribute("golesFavor", SoccerBotsDescription.class), Double.valueOf(0.5d));
 		
-		simConfig.addMapping(new Attribute("golesContra", SoccerBotsDescription.class), (LocalSimilarityFunction) new Equal());
+		simConfig.addMapping(new Attribute("golesContra", SoccerBotsDescription.class), new Equal());
 		simConfig.setWeight(new Attribute("golesContra", SoccerBotsDescription.class), Double.valueOf(0.5d));
+		
+		simConfig.addMapping(new Attribute("diferenciaGoles", SoccerBotsDescription.class), new Equal());
+		simConfig.setWeight(new Attribute("diferenciaGoles", SoccerBotsDescription.class), Double.valueOf(0.5d));
 		
 		simConfig.addMapping (new Attribute("tiempoQueFalta", SoccerBotsDescription.class), new Interval(50));
 		simConfig.setWeight (new Attribute("tiempoQueFalta", SoccerBotsDescription.class), Double.valueOf(0.5d));
-		
-/*
-		// Goles a favor:
-		System.out.println("Setting golesFavor ...");
-		Attribute golesFavor = new Attribute("golesFavor", SoccerBotsDescription.class);
-		simConfig.addMapping(golesFavor, new Interval(3));		// le damos la funcion de similitud
-		simConfig.setWeight(golesFavor, weightVector.pesos[0]);
-		
-		// Goles en contra
-		System.out.println("Setting golesContra ...");
-		Attribute golesContra = new Attribute("golesContra", SoccerBotsDescription.class);
-		simConfig.addMapping(golesContra, new Interval(3));	// le damos la funcion de similitud
-		simConfig.setWeight(golesContra, weightVector.pesos[1]);
-		
-		// Score
-		System.out.println("Setting score ...");
-		Attribute score = new Attribute("score", SoccerBotsDescription.class);
-		simConfig.addMapping(score, new Interval(6));			// le damos la funcion de similitud
-		simConfig.setWeight(score, weightVector.pesos[2]);
-		
-		// Tiempo que falta
-		System.out.println("Setting tiempoQueFalta ...");
-		Attribute tiempoQueFalta = new Attribute("tiempoQueFalta", SoccerBotsDescription.class);
-		simConfig.addMapping(tiempoQueFalta, new Interval(30));	// le damos la funcion de similitud
-		simConfig.setWeight(tiempoQueFalta, weightVector.pesos[3]);
-		*/
+
 	}
 
 	
@@ -229,9 +220,10 @@ public class Recommender implements StandardCBRApplication
 			System.out.println("antes");
 			configure();
 			System.out.println("despues");
-			/*preCycle();
+			preCycle();
+			System.out.println("mas despues");
 			//Crear la Query para la consulta
-			CBRQuery query = new CBRQuery();
+			/*CBRQuery query = new CBRQuery();
 			SoccerBotsDescription queryDescription;
 			queryDescription = new SoccerBotsDescription(gf,gc,dif,t);
 			query.setDescription(queryDescription);
@@ -240,5 +232,9 @@ public class Recommender implements StandardCBRApplication
 		}catch (Exception e){
 			e.printStackTrace();
 		}		
+	}
+	
+	public SoccerBotsSolution getSolution(){
+		return solucion;
 	}
 }// CasesCBR

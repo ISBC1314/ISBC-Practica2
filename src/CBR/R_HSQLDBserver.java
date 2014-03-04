@@ -34,8 +34,8 @@ public class R_HSQLDBserver {
 		//org.apache.commons.logging.LogFactory.getLog(R_HSQLDBserver.class).info("Creating data base ...");
 
 		server = new Server();
-		server.setDatabaseName(0, "game");
-		server.setDatabasePath(0, "mem:game;sql.enforce_strict_size=true");
+		server.setDatabaseName(0, "soccerbots");
+		server.setDatabasePath(0, "mem:soccerbots;sql.enforce_strict_size=true");
 
 		server.setLogWriter(null);
 		server.setErrWriter(null);

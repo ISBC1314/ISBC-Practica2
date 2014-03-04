@@ -11,6 +11,15 @@ public class SoccerBotsSolution implements CaseComponent {
 	//Comportamiento[] result;
 	int valoracion;
 
+	public SoccerBotsSolution(){
+		jugador1= 1;
+		jugador2= 2;
+		jugador3= 4;
+		jugador4= 3;
+		jugador5= 4;
+		valoracion = 0;
+	}
+	
 	@Override
 	public Attribute getIdAttribute() {
 
