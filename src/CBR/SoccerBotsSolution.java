@@ -27,6 +27,17 @@ public class SoccerBotsSolution implements CaseComponent {
 		return new Attribute("id", SoccerBotsSolution.class);
 	}
 	
+	public int getJugador(int i){
+		switch (i){
+		case 0: return jugador1; 
+		case 1: return jugador2; 
+		case 2: return jugador3; 
+		case 3: return jugador4; 
+		case 4: return jugador5;
+		default: return -1;
+		}
+	}
+	
 	public int getJugador1(){
 		return jugador1;
 	}

@@ -1,5 +1,6 @@
 package CBR;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import jcolibri.casebase.LinealCaseBase;
@@ -73,7 +74,7 @@ public class Recommender implements StandardCBRApplication
 	private Connector _connector;	// Debe mapear cada atributo del caso en una columna de la BBDD
 	private CBRCaseBase _caseBase;
 	
-	final int n_casos = 5;
+	int n_casos = 5;
 	
 	private WeightVector weightVector;
 	
@@ -127,7 +128,8 @@ public class Recommender implements StandardCBRApplication
 			// Print the cases
 			java.util.Collection<CBRCase> cases = _caseBase.getCases();
 			for(CBRCase c: cases)
-				System.out.println(c);			
+				System.out.println(c);	
+			n_casos = cases.size();
 			
 		} catch (InitializingException e) {
 			e.printStackTrace();
@@ -164,13 +166,17 @@ public class Recommender implements StandardCBRApplication
 		int maxValoracion = -999999;
 		SoccerBotsSolution solMax = new SoccerBotsSolution();
 		for(RetrievalResult nse: eval){
-			CBRCase c = (CBRCase)nse.get_case();
-			SoccerBotsSolution sol = (SoccerBotsSolution) c.getSolution();
-			/*int val = sol.getValoracion();
+			//CBRCase c = (CBRCase)nse.get_case();
+			SoccerBotsSolution sol = (SoccerBotsSolution) nse.get_case().getSolution();
+			int val = sol.getValoracion();
 			if(maxValoracion < val){
 				maxValoracion = sol.getValoracion();
 				solMax = sol;
-			}*/
+			}
+			if (maxValoracion < 5){
+				//TODO en caso de que ninguna solución nos guste lo suficiente, crear una ramdon
+				//Así iremos almacenando nuevos casos y no siempre basandonos en los que tenemos
+			}
 			System.out.println(nse);
 			System.out.println(sol);
 			
@@ -235,7 +241,17 @@ public class Recommender implements StandardCBRApplication
 		}		
 	}
 	
-	public SoccerBotsSolution getSolution(){
+	public SoccerBotsSolution getSolucion(){
 		return solucion;
+	}
+	
+	public int getNumCasos(){
+		return n_casos;
+	}
+	
+	public void guardarCaso(CBRCase caso){
+		Collection<CBRCase> casos = new ArrayList<CBRCase>();
+		casos.add(caso);
+		_caseBase.learnCases(casos);
 	}
 }// CasesCBR

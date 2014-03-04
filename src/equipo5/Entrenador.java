@@ -1,9 +1,14 @@
 package equipo5;
 
+import jcolibri.cbrcore.CBRCase;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
 import CBR.Recommender;
+import CBR.SoccerBotsDescription;
+import CBR.SoccerBotsSolution;
+
+import static jcolibri.util.CopyUtils.copyCaseComponent;
 
 /*import equipo4.Attacker;
 import equipo4.BloqueadorAtacante;
@@ -28,6 +33,11 @@ public class Entrenador extends TeamManager {
 			new BloqueadorPortero(),	// behaviours[7] -> BloqueadorPorteroContrario
 			new BloqueadorAtacante()	// behaviours[8] -> BloqueadorAtacanteContrario
 	};
+	
+	private int tiempo_ultimo;
+	private boolean primeraConsulta = false;
+	private SoccerBotsSolution solucion;
+	private SoccerBotsDescription descripcion;
 
 	private static enum State {
 		/** La pelota esta en nuestro campo */
@@ -38,7 +48,7 @@ public class Entrenador extends TeamManager {
 	}
 
 	private RobotAPI myRobotAPI;
-	private State state;
+	//private State state;
 	
 	private int portero = 0;
 	private int porteroSustituto = 2;
@@ -90,33 +100,74 @@ public class Entrenador extends TeamManager {
 		
 		
 		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione	
-		
-		if(singleton){
+		int tiempo_pasado = tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime();
+		if(tiempo_pasado >= 20){
+			if (!primeraConsulta){aprender(descripcion,solucion);}
+			descripcion = new SoccerBotsDescription();
 			int myScore = myRobotAPI.getMyScore();
+			descripcion.setGolesFavor(myScore);
 			int opScore = myRobotAPI.getOpponentScore();
-			int dif = Math.abs(myScore - opScore);
+			descripcion.setGolesContra(opScore);
+			int dif = myScore - opScore;
+			descripcion.setDiferenciaGoles(dif);
 			int tiempoFalta = (int) myRobotAPI.getMatchRemainingTime();
+			descripcion.setTiempoQueFalta(tiempoFalta);
 			recomender.run(myScore, opScore , dif, tiempoFalta);
-			singleton = false;
+			solucion = recomender.getSolucion();
+			aplicarSolucion();
+			tiempo_ultimo = (int) myRobotAPI.getTimeStamp();
 		}
-
-		
-		
-		state = calculaSigEstado();
-
-		switch (state) {
-			case OFENSIVO: {
-				stepOfensivo();
-				break;
-			}
-			case DEFENSIVO: {
-				stepDefensivo();
-				break;
-			}
-		}
-
 	}
 
+	private void aprender(SoccerBotsDescription des, SoccerBotsSolution sol){
+		int actualMyScore = myRobotAPI.getMyScore();
+		int actualOpScore = myRobotAPI.getOpponentScore();
+		int actualDif = actualMyScore - actualOpScore;
+		if (des.getDiferenciaGoles()>actualDif){
+			//Si entra aquí significa que al menos la diferencia se mantiene o ha mejorado
+			CBRCase aprenderCaso = new CBRCase();
+			int num_casos = recomender.getNumCasos()+1;
+			
+			des.setId(""+num_casos);
+			aprenderCaso.setDescription(copyCaseComponent(des));
+			
+			SoccerBotsSolution guardarSol = new SoccerBotsSolution();
+			guardarSol.setId(""+num_casos);
+			guardarSol.setJugador1(sol.getJugador1());
+			guardarSol.setJugador2(sol.getJugador2());
+			guardarSol.setJugador3(sol.getJugador3());
+			guardarSol.setJugador4(sol.getJugador4());
+			guardarSol.setJugador5(sol.getJugador5());
+			//Crear valoracion de la solución
+			int valorar = 0;
+			if (des.getGolesFavor()<actualMyScore){
+				//He metido gol
+				int difGoles = actualMyScore - des.getGolesFavor();
+				valorar += 2*difGoles;
+				if (des.getGolesContra()<actualOpScore){
+					//Tambien ha metido gol el contrario
+					difGoles = actualOpScore - des.getGolesContra();
+					valorar -= difGoles; 
+				}
+			}
+			else {
+				//No he metido gole el contrario tampoco habrá metido goles
+				//Si hubiese metido no estaríamos evaluando porque la diferencia sería peor que la que teníamos
+				valorar += 1;
+			}
+			guardarSol.setValoracion(valorar);			
+			aprenderCaso.setSolution(guardarSol);
+			
+			recomender.guardarCaso(aprenderCaso);
+		}
+	}
+	
+	private void aplicarSolucion(){
+		for (int i=0; i<5; i++){
+			_players[i].setBehaviour(behaviours[solucion.getJugador(i)]);
+		}
+	}
+	
 	private void stepOfensivo() {
 		_players[portero].setBehaviour(behaviours[1]);// Portero
 		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
