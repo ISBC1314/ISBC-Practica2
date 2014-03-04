@@ -6,19 +6,8 @@ import jcolibri.cbrcore.CaseComponent;
 public class SoccerBotsSolution implements CaseComponent {
 	
 	/** Comportamientos disponibles para los jugadores*/
-	private static enum Comportamiento {
-			ATACANTE,
-			DEFENSA_ARRIBA,
-			DEFENSA_ABAJO,
-			DEFENSA_SOLO,
-			GO_TO_BALL,
-			WANDER,
-			PORTERO,
-			BLOQUEADOR_PORTERO,
-			BLOQUEADOR_ATACANTE;
-	}
 	
-	Comportamiento jugador1,jugador2,jugador3,jugador4,jugador5;
+	int jugador1,jugador2,jugador3,jugador4,jugador5;
 	//Comportamiento[] result;
 	int valoracion;
 
@@ -28,43 +17,43 @@ public class SoccerBotsSolution implements CaseComponent {
 		return new Attribute("result", SoccerBotsSolution.class);
 	}
 	
-	public Comportamiento getJugador1(){
+	public int getJugador1(){
 		return jugador1;
 	}
 	
-	public Comportamiento getJugador2(){
+	public int getJugador2(){
 		return jugador2;
 	}
 	
-	public Comportamiento getJugador3(){
+	public int getJugador3(){
 		return jugador3;
 	}
 	
-	public Comportamiento getJugador4(){
+	public int getJugador4(){
 		return jugador4;
 	}
 	
-	public Comportamiento getJugador5(){
+	public int getJugador5(){
 		return jugador5;
 	}
 	
-	public void setJugador1(Comportamiento comp){
+	public void setJugador1(int comp){
 		this.jugador1 = comp;
 	}
 	
-	public void setJugador2(Comportamiento comp){
+	public void setJugador2(int comp){
 		this.jugador2 = comp;
 	}
 	
-	public void setJugador3(Comportamiento comp){
+	public void setJugador3(int comp){
 		this.jugador3 = comp;
 	}
 	
-	public void setJugador4(Comportamiento comp){
+	public void setJugador4(int comp){
 		this.jugador4 = comp;
 	}
 	
-	public void setJugador5(Comportamiento comp){
+	public void setJugador5(int comp){
 		this.jugador5 = comp;
 	}
 	/*

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+<class name="CBR.SoccerBotsSolution" table="SoccerBots">
+	<id name="id" column="caseId">
+	</id>
+	<property name="jugador1" column="jugador1"/>
+	<property name="jugador2" column="jugador2"/>	
+	<property name="jugador3" column="jugador3"/>
+	<property name="jugador4" column="jugador4"/>
+	<property name="jugador5" column="jugador5"/>
+	<property name="valoracion" column="valoracion"/>
+</class>
+
+</hibernate-mapping>

@@ -1,0 +1,7 @@
+<DataBaseConfiguration>
+	<HibernateConfigFile>CBR/hibernate.cfg.xml</HibernateConfigFile>
+	<DescriptionMappingFile>CBR/SoccerBotsDescription.hbm.xml</DescriptionMappingFile>
+	<DescriptionClassName>CBR.SoccerBotsDescription</DescriptionClassName>
+	<SolutionMappingFile>CBR/SoccerBotsSolution.hbm.xml</SolutionMappingFile>
+	<SolutionClassName>CBR.SoccerBotsSolution</SolutionClassName>
+</DataBaseConfiguration>
