@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
 import jcolibri.casebase.LinealCaseBase;
+import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
-import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
@@ -96,7 +96,7 @@ public class Recommender implements StandardCBRApplication
 	
 	/** Configura la persistencia de los casos y su organización en memoria **/
 	@Override
-	public void configure() throws ExecutionException {
+	public void configure(){
 		// TODO -> Conectar el _connector con la BBDD, no se como hacerlo
 		try{
 			File file = new File ("./data/casesCBR.txt");
@@ -112,7 +112,7 @@ public class Recommender implements StandardCBRApplication
 			_caseBase = new LinealCaseBase();
 			
 		}catch (Exception e){
-			throw new ExecutionException(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -124,7 +124,7 @@ public class Recommender implements StandardCBRApplication
 	
 	/** Carga los casos en memoria **/
 	@Override
-	public CBRCaseBase preCycle() throws ExecutionException {
+	public CBRCaseBase preCycle(){
 		
 		// Cargamos los casos del conector a la base de datos
 		try {
@@ -147,7 +147,7 @@ public class Recommender implements StandardCBRApplication
 	
 	/** Recibe la consulta y ejecuta el ciclo CBR: Recuperar, Reutilizar, Revisar y Retener **/
 	@Override
-	public void cycle(CBRQuery query) throws ExecutionException {
+	public void cycle(CBRQuery query){
 		
 		// Primero configuramos el KNN
 		NNConfig simConfig = new NNConfig();		
@@ -219,7 +219,7 @@ public class Recommender implements StandardCBRApplication
 
 	/** Libera los recursos y finaliza **/
 	@Override
-	public void postCycle() throws ExecutionException {
+	public void postCycle(){
 		this._connector.close();
 	}
 	
@@ -239,8 +239,7 @@ public class Recommender implements StandardCBRApplication
 			query.setDescription(queryDescription);
 			cycle(query);
 			postCycle();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
+		}catch (Exception e){
 			e.printStackTrace();
 		}		
 	}
