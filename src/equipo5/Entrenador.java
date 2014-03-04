@@ -1,9 +1,9 @@
 package equipo5;
 
+import jcolibri.evaluation.evaluators.HoldOutEvaluator;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
-
 import CBR.Recommender;
 
 /*import equipo4.Attacker;
@@ -43,6 +43,9 @@ public class Entrenador extends TeamManager {
 	
 	private int portero = 0;
 	private int porteroSustituto = 2;
+	Recommender recomender = new Recommender();
+	
+	boolean singleton = true;
 	
 	//StandardCBRApplication cbrApp;
 
@@ -80,17 +83,23 @@ public class Entrenador extends TeamManager {
 
 		/** Aquí creo que deberíamos hacer el run() del CBR para que calcule el comportamiento de cada jugador **/
 
-		/*
-		HoldOutEvaluator eval = new HoldOutEvaluator();
-		eval.init(cbrApp);
 		
-		run();
-		*/
+		HoldOutEvaluator eval = new HoldOutEvaluator();
+		eval.init(recomender);
+		
+		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione	
+		
+		if(singleton){
+			int myScore = myRobotAPI.getMyScore();
+			int opScore = myRobotAPI.getOpponentScore();
+			int dif = Math.abs(myScore - opScore);
+			int tiempoFalta = (int) myRobotAPI.getMatchRemainingTime();
+			recomender.run(myScore, opScore , dif, tiempoFalta);
+			singleton = false;
+		}
 
 		/** ------------ **/
 		
-		
-		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione
 		state = calculaSigEstado();
 
 		switch (state) {

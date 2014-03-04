@@ -58,8 +58,8 @@ public class Recommender implements StandardCBRApplication
 		WeightVector.COMPORTAMIENTO_JUGADOR4,
 		WeightVector.COMPORTAMIENTO_JUGADOR5,
 	    */
-	    WeightVector.GOLES_CONTRA,
-	    WeightVector.GOLES_FAVOR,
+		WeightVector.GOLES_FAVOR,
+		WeightVector.GOLES_CONTRA,
 	    WeightVector.SCORE,
 	    WeightVector.TIEMPO_QUE_FALTA
 	};	
@@ -82,7 +82,7 @@ public class Recommender implements StandardCBRApplication
 	
 	public Recommender(){
 		weightVector = new WeightVector();
-		for(int i = 0; i < 9; i++){
+		for(int i = 0; i < 4; i++){
 			weightVector.pesos[i] = DEFAULT_WEIGHTS[i];
 		}
 	}
@@ -228,7 +228,7 @@ public class Recommender implements StandardCBRApplication
 				    /** MAIN METHOD **/
 					/*****************/	
 	
-	public void run (int gf, int gc, int dif, int t){
+	public void run (int gf, int gc, int dif,int t){
 		try {
 			configure();
 			preCycle();

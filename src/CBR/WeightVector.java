@@ -18,7 +18,7 @@ public class WeightVector
 	public double[] pesos;
 
 	public WeightVector() {
-		pesos = new double[9];
+		pesos = new double[4];
 	}
 
 }
