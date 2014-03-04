@@ -75,6 +75,10 @@ public class Entrenador extends TeamManager {
 
 	@Override
 	public int onConfigure() {
+		
+		HoldOutEvaluator eval = new HoldOutEvaluator();
+		eval.init(recomender);
+		
 		return RobotAPI.ROBOT_OK;
 	}
 
@@ -84,8 +88,7 @@ public class Entrenador extends TeamManager {
 		/** Aquí creo que deberíamos hacer el run() del CBR para que calcule el comportamiento de cada jugador **/
 
 		
-		HoldOutEvaluator eval = new HoldOutEvaluator();
-		eval.init(recomender);
+		
 		
 		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione	
 		

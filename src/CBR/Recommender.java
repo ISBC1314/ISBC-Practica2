@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
+import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
@@ -11,6 +12,7 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.connector.DataBaseConnector;
+import jcolibri.connector.PlainTextConnector;
 import jcolibri.exception.InitializingException;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.FilterBasedRetrieval.predicates.Equal;
@@ -97,7 +99,6 @@ public class Recommender implements StandardCBRApplication
 	/** Configura la persistencia de los casos y su organización en memoria **/
 	@Override
 	public void configure(){
-		// TODO -> Conectar el _connector con la BBDD, no se como hacerlo
 		try{
 			File file = new File ("./data/casesCBR.txt");
 			if (!file.exists()){
@@ -105,11 +106,11 @@ public class Recommender implements StandardCBRApplication
 				casesCreator.go();
 			}
 			// Nos creamos un conector de la base de datos
-			_connector = new DataBaseConnector();
+			_connector = new PlainTextConnector();
 			// Inicializamos el conector de la base de datos con el "config file"
-			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("CBR/textConnector.xml"));
+			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("./CBR/textConnector.xml"));
 			// Creamos un caso base lineal para la organización en memoria
-			_caseBase = new LinealCaseBase();
+			_caseBase = new CachedLinealCaseBase();
 			
 		}catch (Exception e){
 			e.printStackTrace();
@@ -128,7 +129,9 @@ public class Recommender implements StandardCBRApplication
 		
 		// Cargamos los casos del conector a la base de datos
 		try {
+			System.out.println("Starting preCycle()...");
 			_caseBase.init(_connector);
+			System.out.println("Ending preCycle()...");
 		/*
 			Collection<CBRCase> cases = _caseBase.getCases();
 			for(CBRCase c: cases)
