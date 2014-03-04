@@ -21,7 +21,7 @@ public class CasesCreator {
 		long id = 1;
 		
 		while((line=br.readLine()) != null){
-			System.out.println("Creatin a new case...");
+			System.out.println("Creating a new case...");
 			
 			bw = new BufferedWriter (new FileWriter(pathname,true));
 			StringTokenizer tokenizer = new StringTokenizer(line);
