@@ -76,8 +76,8 @@ public class Entrenador extends TeamManager {
 	@Override
 	public int onConfigure() {
 		
-		HoldOutEvaluator eval = new HoldOutEvaluator();
-		eval.init(recomender);
+		//HoldOutEvaluator eval = new HoldOutEvaluator();
+		//eval.init(recomender);
 		
 		return RobotAPI.ROBOT_OK;
 	}

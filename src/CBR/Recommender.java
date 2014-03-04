@@ -100,17 +100,14 @@ public class Recommender implements StandardCBRApplication
 	@Override
 	public void configure(){
 		try{
-			File file = new File ("./data/casesCBR.txt");
-			if (!file.exists()){
-				CasesCreator casesCreator = new CasesCreator();
-				casesCreator.go();
-			}
-			// Nos creamos un conector de la base de datos
-			_connector = new PlainTextConnector();
-			// Inicializamos el conector de la base de datos con el "config file"
-			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("./CBR/textConnector.xml"));
-			// Creamos un caso base lineal para la organización en memoria
-			_caseBase = new CachedLinealCaseBase();
+			//Emulate data base server
+			R_HSQLDBserver.init();
+			// Create a data base connector
+			_connector = new DataBaseConnector();
+			// Init the ddbb connector with the config file
+			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("CBR/databaseconfig.xml"));
+			// Create a Lineal case base for in-memory organization
+			_caseBase = new LinealCaseBase();
 			
 		}catch (Exception e){
 			e.printStackTrace();
@@ -233,15 +230,17 @@ public class Recommender implements StandardCBRApplication
 	
 	public void run (int gf, int gc, int dif,int t){
 		try {
+			System.out.println("antes");
 			configure();
-			preCycle();
+			System.out.println("despues");
+			/*preCycle();
 			//Crear la Query para la consulta
 			CBRQuery query = new CBRQuery();
 			SoccerBotsDescription queryDescription;
 			queryDescription = new SoccerBotsDescription(gf,gc,dif,t);
 			query.setDescription(queryDescription);
 			cycle(query);
-			postCycle();
+			postCycle();*/
 		}catch (Exception e){
 			e.printStackTrace();
 		}		
