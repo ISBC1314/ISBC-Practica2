@@ -3,7 +3,6 @@ package equipo1;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
-import teams.ucmTeam.UCMPlayer;
 
 public final class PorteroTeamManager extends TeamManager {
 

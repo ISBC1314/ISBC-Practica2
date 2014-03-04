@@ -12,16 +12,10 @@
 	<classpathentry kind="lib" path="lib/soccerbots.jar"/>
 	<classpathentry kind="lib" path="lib/subsuncion.jar"/>
 	<classpathentry kind="lib" path="lib/ucmteam.jar"/>
-	<classpathentry kind="lib" path="lib/jcolibri2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jcolibri2.jar"/>
 	<classpathentry kind="lib" path="lib/rolebasedteam.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jCOLIBRI2"/>
-	<classpathentry kind="lib" path="lib/databaseconnector/asm-attrs.jar"/>
-	<classpathentry kind="lib" path="lib/databaseconnector/asm.jar"/>
-	<classpathentry kind="lib" path="lib/databaseconnector/c3p0-0.9.0.jar"/>
-	<classpathentry kind="lib" path="lib/databaseconnector/cglib-2.1.3.jar"/>
-	<classpathentry kind="lib" path="lib/databaseconnector/hibernate3.jar"/>
-	<classpathentry kind="lib" path="lib/databaseconnector/hsqldb.jar"/>
-	<classpathentry kind="lib" path="lib/databaseconnector/jta.jar"/>
-	<classpathentry kind="lib" path="lib/databaseconnector/mysql-connector-java-3.0.11-stable-bin.jar"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/jCOLIBRI2"/>
+	<classpathentry kind="lib" path="/jCOLIBRI2/lib/jcolibri2.jar"/>
+	<classpathentry kind="lib" path="/jCOLIBRI2/lib/databaseconnector/hsqldb.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,10 +1,7 @@
 package CBR;
 
-import java.io.File;
 import java.util.Collection;
-import java.util.concurrent.ExecutionException;
 
-import jcolibri.casebase.CachedLinealCaseBase;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.cbrcore.Attribute;
@@ -12,7 +9,6 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.connector.DataBaseConnector;
-import jcolibri.connector.PlainTextConnector;
 import jcolibri.exception.InitializingException;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.FilterBasedRetrieval.predicates.Equal;
