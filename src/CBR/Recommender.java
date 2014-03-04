@@ -164,12 +164,13 @@ public class Recommender implements StandardCBRApplication
 		int maxValoracion = -999999;
 		SoccerBotsSolution solMax = new SoccerBotsSolution();
 		for(RetrievalResult nse: eval){
-			double confianza = nse.getEval();
-			SoccerBotsSolution sol = (SoccerBotsSolution)nse.get_case().getSolution();
-			if(maxValoracion < sol.valoracion){
-				maxValoracion = sol.valoracion;
+			CBRCase c = (CBRCase)nse.get_case();
+			SoccerBotsSolution sol = (SoccerBotsSolution) c.getSolution();
+			/*int val = sol.getValoracion();
+			if(maxValoracion < val){
+				maxValoracion = sol.getValoracion();
 				solMax = sol;
-			}
+			}*/
 			System.out.println(nse);
 			System.out.println(sol);
 			
@@ -223,12 +224,12 @@ public class Recommender implements StandardCBRApplication
 			preCycle();
 			System.out.println("mas despues");
 			//Crear la Query para la consulta
-			/*CBRQuery query = new CBRQuery();
+			CBRQuery query = new CBRQuery();
 			SoccerBotsDescription queryDescription;
 			queryDescription = new SoccerBotsDescription(gf,gc,dif,t);
 			query.setDescription(queryDescription);
 			cycle(query);
-			postCycle();*/
+			postCycle();
 		}catch (Exception e){
 			e.printStackTrace();
 		}		

@@ -7,9 +7,10 @@ public class SoccerBotsSolution implements CaseComponent {
 	
 	/** Comportamientos disponibles para los jugadores*/
 	
-	int jugador1,jugador2,jugador3,jugador4,jugador5;
+	private int jugador1,jugador2,jugador3,jugador4,jugador5,valoracion;
 	//Comportamiento[] result;
-	int valoracion;
+
+	String id;
 
 	public SoccerBotsSolution(){
 		jugador1= 1;
@@ -23,7 +24,7 @@ public class SoccerBotsSolution implements CaseComponent {
 	@Override
 	public Attribute getIdAttribute() {
 
-		return new Attribute("result", SoccerBotsSolution.class);
+		return new Attribute("id", SoccerBotsSolution.class);
 	}
 	
 	public int getJugador1(){
@@ -65,15 +66,7 @@ public class SoccerBotsSolution implements CaseComponent {
 	public void setJugador5(int comp){
 		this.jugador5 = comp;
 	}
-	/*
-	public Comportamiento[] getResult() {
-		return result;
-	}
-
-	public void setResult(Comportamiento[] result) {
-		this.result = result;
-	}
-	*/
+	
 	public int getValoracion(){
 		return valoracion;
 	}
@@ -82,6 +75,14 @@ public class SoccerBotsSolution implements CaseComponent {
 		this.valoracion = val;
 	}
 
+	public void setId(String i){
+		id = i;
+	}
+	
+	public String getId(){
+		return id;
+	}
+	
 	@Override
 	public String toString(){
 		return "SoccerBotsSolution ["/*id="+id+",*/+"comportamientos="+
