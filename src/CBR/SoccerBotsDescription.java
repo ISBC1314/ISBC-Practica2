@@ -61,11 +61,11 @@ public class SoccerBotsDescription implements CaseComponent{
 		this.golesContra = golesContra;
 	}
 	
-	public int getDiferncia() {
+	public int getDiferenciaGoles() {
 		return diferenciaGoles;
 	}
 
-	public void setDiferencia(int diferencia) {
+	public void setDiferenciaGoles(int diferencia) {
 		this.diferenciaGoles = diferencia;
 	}
 	
