@@ -4,7 +4,7 @@ import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
 
-import CBR.CasesCBR;
+import CBR.Recommender;
 
 /*import equipo4.Attacker;
 import equipo4.BloqueadorAtacante;
@@ -44,7 +44,7 @@ public class Entrenador extends TeamManager {
 	private int portero = 0;
 	private int porteroSustituto = 2;
 	
-	StandardCBRApplication cbrApp;
+	//StandardCBRApplication cbrApp;
 
 	@Override
 	public Behaviour[] createBehaviours() {
@@ -142,7 +142,7 @@ public class Entrenador extends TeamManager {
 			return State.OFENSIVO;
 		 
 	}
-	
+	/*
 	public void run(){
 		try{
 		
@@ -163,6 +163,6 @@ public class Entrenador extends TeamManager {
 		} catch (Exception e){ e.printStackTrace();}
 		
 	}
-
+*/
 	 
 } //Entrenador

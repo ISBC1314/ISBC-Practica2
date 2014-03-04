@@ -24,9 +24,18 @@ public class SoccerBotsDescription implements CaseComponent{
 	*/
 	private int golesFavor;
 	private int golesContra;
-	private int diferencia;
+	private int diferenciaGoles;
 	private int tiempoQueFalta;
 	
+	//CONSTRUCTORES
+	public SoccerBotsDescription(){}
+	
+	public SoccerBotsDescription(int golFav, int golCon, int dif, int tiemp){
+		this.golesFavor = golFav;
+		this.golesContra = golCon;
+		this.diferenciaGoles = dif;
+		this.tiempoQueFalta = tiemp;
+	}
 	
 	public String getId() {
 		return id;
@@ -53,11 +62,11 @@ public class SoccerBotsDescription implements CaseComponent{
 	}
 	
 	public int getDiferncia() {
-		return diferencia;
+		return diferenciaGoles;
 	}
 
 	public void setDiferencia(int diferencia) {
-		this.diferencia = diferencia;
+		this.diferenciaGoles = diferencia;
 	}
 	
 	/*public Comportamiento getComportamiento(int pos){
@@ -85,7 +94,7 @@ public class SoccerBotsDescription implements CaseComponent{
 	}
 	
 	public String toString(){
-		return "SoccerBotsDescription ["/*id="+id*/+"diferenciaGoles="+diferencia+
+		return "SoccerBotsDescription ["/*id="+id*/+"diferenciaGoles="+diferenciaGoles+
 				",resultado="+golesFavor+"-"+golesContra+",tiempoRestante="+tiempoQueFalta+
 				/*"comportamientos="+compJugadores[0]+"/"+compJugadores[1]+"/"+compJugadores[2]+
 				"/"+compJugadores[3]+"/"+compJugadores[4]+*/"]";

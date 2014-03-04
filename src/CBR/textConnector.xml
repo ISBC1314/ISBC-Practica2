@@ -5,7 +5,7 @@
 	<DescriptionMappings>
 		<Map>golesFavor</Map>
 		<Map>golesContra</Map>
-		<Map>diferencia</Map>
+		<Map>diferenciaGoles</Map>
 		<Map>tiempoQueFalta</Map>
 	</DescriptionMappings>
 	<SolutionClassName>CBR.SoccerBotsSolution</SolutionClassName>
