@@ -1,0 +1,20 @@
+<TextFileConfiguration>
+	<FilePath>data/casesCBR.txt</FilePath>
+	<Delimiters>,</Delimiters>
+	<DescriptionClassName>CBR.SoccerBotsDescription</DescriptionClassName>
+	<DescriptionMappings>
+		<Map>golesFavor</Map>
+		<Map>golesContra</Map>
+		<Map>diferencia</Map>
+		<Map>tiempoQueFalta</Map>
+	</DescriptionMappings>
+	<SolutionClassName>CBR.SoccerBotsSolution</SolutionClassName>
+	<SolutionMappings>
+		<Map>jugador1</Map>
+		<Map>jugador2</Map>
+		<Map>jugador3</Map>
+		<Map>jugador4</Map>
+		<Map>jugador5</Map>
+		<Map>valoracion</Map>
+	</SolutionMappings>
+</TextFileConfiguration>

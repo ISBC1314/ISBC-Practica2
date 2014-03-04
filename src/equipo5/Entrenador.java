@@ -1,13 +1,10 @@
 package equipo5;
 
-import jcolibri.cbraplications.StandardCBRApplication;
-import jcolibri.cbrcore.CBRQuery;
-import jcolibri.evaluation.evaluators.HoldOutEvaluator;
-import jcolibri.test.test1.Test1;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
 
+import CBR.CasesCBR;
 
 /*import equipo4.Attacker;
 import equipo4.BloqueadorAtacante;

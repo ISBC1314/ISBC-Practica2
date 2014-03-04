@@ -1,4 +1,4 @@
-package equipo5;
+package CBR;
 
 import java.util.concurrent.ExecutionException;
 
@@ -11,3 +11,4 @@ public interface StandardCBRApplication {
 	public void cycle(CBRQuery query) throws ExecutionException;
 	public void postCycle() throws ExecutionException;
 }
+

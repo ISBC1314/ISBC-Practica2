@@ -1,4 +1,4 @@
-package equipo5;
+package CBR;
 
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
