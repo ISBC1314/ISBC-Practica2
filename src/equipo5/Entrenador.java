@@ -1,6 +1,5 @@
 package equipo5;
 
-import equipo4.DefensaSolo;
 import jcolibri.cbrcore.CBRCase;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;

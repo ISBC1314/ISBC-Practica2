@@ -1,9 +1,7 @@
-package equipo4;
+package t1314grupo18;
 
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
-
-
 
 public class Wander extends Behaviour
 {
