@@ -60,11 +60,6 @@ public class Recommender implements StandardCBRApplication
 	
 /* Atributos */
 	
-	/* El "Connector":
-	 	· Se puede crear implementando la Interfaz
-	 	· O usar los ya implementados: DDBB, TXT y Onto. Se inicializan a traves de un archivo XML
-	jCOLIBRI2 incluye uno implementado en Java: HSQLDB
-	*/
 	private static Recommender _instance = null;
 	private Connector _connector;	// Debe mapear cada atributo del caso en una columna de la BBDD
 	private CBRCaseBase _caseBase;
@@ -109,7 +104,6 @@ public class Recommender implements StandardCBRApplication
 		}
 		
 	}
-
 	
 					/****************/
 					/*** PRECYCLE ***/
@@ -135,7 +129,6 @@ public class Recommender implements StandardCBRApplication
 	}
 
 	
-
 					/*****************/
 					/***** CYCLE *****/
 					/*****************/
@@ -164,6 +157,8 @@ public class Recommender implements StandardCBRApplication
 		SoccerBotsSolution solMax = new SoccerBotsSolution();
 		int i = 0;
 		for(RetrievalResult nse: eval){
+			
+			// Guardamos los casos en un txt
 			try {
 				CBRCase caso = (CBRCase) nse.get_case();
 				CaseComponent d = caso.getDescription();
@@ -196,12 +191,8 @@ public class Recommender implements StandardCBRApplication
 		}
 		
 		solucion = solMax;
-		
 		System.out.println(solucion);
-		
-		/*System.out.println("Retrieved cases:");
-		for(RetrievalResult nse: eval)
-			System.out.println(nse);*/
+
 	}
 	
 	// Asignamos a cada atributo la funcion de similitud que va a utilizar

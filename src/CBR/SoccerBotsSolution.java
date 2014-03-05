@@ -7,9 +7,12 @@ public class SoccerBotsSolution implements CaseComponent {
 	
 	/** Comportamientos disponibles para los jugadores*/
 	
-	private int jugador1,jugador2,jugador3,jugador4,jugador5,valoracion;
-	//Comportamiento[] result;
-
+	private int jugador1,
+				jugador2,
+				jugador3,
+				jugador4,
+				jugador5,
+				valoracion;
 	String id;
 
 	public SoccerBotsSolution(){
@@ -96,10 +99,7 @@ public class SoccerBotsSolution implements CaseComponent {
 	
 	@Override
 	public String toString(){
-		return "SoccerBotsSolution ["/*id="+id+",*/+"comportamientos="+
-				jugador1+"/"+jugador2+"/"+jugador3+"/"+jugador4+"/"+jugador5+"/"+
-				/*result[0]+"/"+result[1]+"/"+result[2]+"/"+result[3]+"/"+result[4]+*/
-				",valoracion="+valoracion+"]";
+		return "SoccerBotsSolution ["+"comportamientos="+jugador1+"/"+jugador2+"/"+jugador3+"/"+jugador4+"/"+jugador5+"/"+",valoracion="+valoracion+"]";
 	}
 }
 

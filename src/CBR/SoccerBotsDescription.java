@@ -6,22 +6,6 @@ import jcolibri.cbrcore.CaseComponent;
 public class SoccerBotsDescription implements CaseComponent{
 	
 	String id;
-	
-	/** Comportamientos disponibles para los jugadores*/
-	/* REALMENTE NECESITAMOS SABER LOS COMPORTAMIENTOS ACTUALES????
-	 * private static enum Comportamiento {
-			ATACANTE,
-			DEFENSA_ARRIBA,
-			DEFENSA_ABAJO,
-			GO_TO_BALL,
-			WANDER,
-			PORTERO,
-			BLOQUEADOR_PORTERO,
-			BLOQUEADOR_ATACANTE;
-	}
-	
-	private Comportamiento[] compJugadores;
-	*/
 	private int golesFavor;
 	private int golesContra;
 	private int diferenciaGoles;
@@ -69,22 +53,6 @@ public class SoccerBotsDescription implements CaseComponent{
 		this.diferenciaGoles = diferencia;
 	}
 	
-	/*public Comportamiento getComportamiento(int pos){
-		return compJugadores[pos];
-	}
-	
-	public void setComportamiento(int pos, Comportamiento com){
-		this.compJugadores[pos] = com;
-	}
-
-	public Comportamiento[] getComportamientos() {
-		return compJugadores;
-	}
-	
-	public void setComportamientos(Comportamiento[] com) {
-		this.compJugadores = com;
-	}*/
-	
 	public int getTiempoQueFalta() {
 		return tiempoQueFalta;
 	}
@@ -94,10 +62,7 @@ public class SoccerBotsDescription implements CaseComponent{
 	}
 	
 	public String toString(){
-		return "SoccerBotsDescription ["/*id="+id*/+"diferenciaGoles="+diferenciaGoles+
-				",resultado="+golesFavor+"-"+golesContra+",tiempoRestante="+tiempoQueFalta+
-				/*"comportamientos="+compJugadores[0]+"/"+compJugadores[1]+"/"+compJugadores[2]+
-				"/"+compJugadores[3]+"/"+compJugadores[4]+*/"]";
+		return "SoccerBotsDescription ["+"diferenciaGoles="+diferenciaGoles+",resultado="+golesFavor+"-"+golesContra+",tiempoRestante="+tiempoQueFalta+"]";
 	}
 
 	@Override

@@ -29,24 +29,10 @@ public class Entrenador extends TeamManager {
 	private boolean primeraConsulta = true;
 	private SoccerBotsSolution solucion;
 	private SoccerBotsDescription descripcion;
-
-	private static enum State {
-		/** La pelota esta en nuestro campo */
-		DEFENSIVO,
-
-		/** La pelota esta en el campo contrario */
-		OFENSIVO;
-	}
-
 	private RobotAPI myRobotAPI;
-	//private State state;
 	
-	private int portero = 0;
-	private int porteroSustituto = 2;
 	Recommender recomender = new Recommender();
 	
-	//StandardCBRApplication cbrApp;
-
 	@Override
 	public Behaviour[] createBehaviours() {
 		return behaviours;
@@ -163,43 +149,6 @@ public class Entrenador extends TeamManager {
 		for (int i=0; i<5; i++){
 			_players[i].setBehaviour(behaviours[solucion.getJugador(i)]);
 		}
-	}
-	
-	private void stepOfensivo() {
-		_players[portero].setBehaviour(behaviours[1]);// Portero
-		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
-		_players[porteroSustituto].setBehaviour(behaviours[4]);// GoToBall
-		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[4]);// GoToBall
-			
-	}
-	
-	private void stepDefensivo() {
-		
-		_players[portero].setBehaviour(behaviours[1]);// Portero
-		_players[1].setBehaviour(behaviours[2]);// Defensa Arriba
-		_players[porteroSustituto].setBehaviour(behaviours[5]);// Wander
-		_players[3].setBehaviour(behaviours[3]);// Defensa Abajo
-		_players[4].setBehaviour(behaviours[5]);// BloqueadorAtacante
-		
-	}
-
-	private State calculaSigEstado() {
-		
-		//Si el portero esta bloqueado. Se pone al sustituto
-		if(_players[portero].getRobotAPI().opponentBlocking()){
-			int aux = portero;
-			portero = porteroSustituto;
-			porteroSustituto = aux;
-		}
-			
-		
-
-		if (RobotUtils.pelotaEnMiCampo(myRobotAPI))
-			return State.DEFENSIVO;
-		else
-			return State.OFENSIVO;
-		 
 	}
 	 
 } //Entrenador
