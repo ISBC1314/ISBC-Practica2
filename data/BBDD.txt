@@ -1,1 +1,9 @@
 
+SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=26984]
+SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=23968]
+SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=20952]
+SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=17936]
+SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=14920]
+SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=11904]
+SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=8888]
+SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=5872]
