@@ -134,13 +134,13 @@ public class Entrenador extends TeamManager {
 				}
 			}
 			else {
-				//No he metido gole el contrario tampoco habra metido goles
+				//No he metido gol el contrario tampoco habra metido goles
 				valorar = 5 + difGoles;
 			}
 			guardarSol.setValoracion(valorar);			
 			aprenderCaso.setSolution(guardarSol);
 			
-			recomender.guardarCaso(aprenderCaso);
+			recomender.guardarCaso(aprenderCaso, des, sol);
 		}
 
 	}

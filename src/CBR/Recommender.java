@@ -1,6 +1,8 @@
 package CBR;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -252,9 +254,37 @@ public class Recommender implements StandardCBRApplication
 		return n_casos;
 	}
 	
-	public void guardarCaso(CBRCase caso){
+	public void guardarCaso(CBRCase caso,SoccerBotsDescription des, SoccerBotsSolution sol){
 		Collection<CBRCase> casos = new ArrayList<CBRCase>();
 		casos.add(caso);
 		_caseBase.learnCases(casos);
+		copiarCasoAFichero(des,sol);	
+	}
+	
+	public void copiarCasoAFichero(SoccerBotsDescription des, SoccerBotsSolution sol){
+		String s = "insert into soccerbots values(";
+		s += "'" + des.getId() + "'" + ", ";
+		s += des.getGolesFavor() + ", ";
+		s += des.getGolesContra() + ", ";
+		s += des.getDiferenciaGoles() + ", ";
+		s += des.getTiempoQueFalta() + ", ";
+		for (int i=0; i<4; i++)
+			s+= sol.getJugador(i) + ", ";
+		s += sol.getValoracion() + ")";
+		System.out.println("*************************************");
+		System.out.println(s);
+		System.out.println("*************************************");
+		
+		try {
+			FileWriter fich = new FileWriter("soccerbots.sql",true);
+			PrintWriter pw = new PrintWriter(fich);
+			pw.println(s);
+			System.out.println("HE IMPRIMIDO (se supone)");
+			fich.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 }// CasesCBR
