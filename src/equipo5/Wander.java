@@ -3,8 +3,6 @@ package equipo5;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 
-
-
 public class Wander extends Behaviour
 {
 	
@@ -33,7 +31,7 @@ public class Wander extends Behaviour
 	
 	protected void onTakeStep(RobotAPI robot) {
 		if (robot.getTimeStamp()-initTime>1000) {
-			// Si ha pasado un segundo cambio de dirección
+			// Si ha pasado un segundo cambio de direccion
 			robot.setSteerHeading(Math.random()*2*3.141598);
 			robot.setSpeed(1.0);
 			initTime = robot.getTimeStamp();

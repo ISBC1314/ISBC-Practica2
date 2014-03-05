@@ -10,10 +10,10 @@ public final class PorteroBehaviour extends Behaviour {
         /**Ir a la porteria porque estoy lejos de ella */
         IR_PORTERIA,
 
-        /** Defender la porteria cuando la pelota esta lejos del área */
+        /** Defender la porteria cuando la pelota esta lejos del area */
         DEFEND,
         
-        /** Defender la porteria cuando la pelota esta muy cerca del área o en ella */
+        /** Defender la porteria cuando la pelota esta muy cerca del area o en ella */
         DEFEND_AREA,
         
         /** El jugador esta bloqueado*/
@@ -68,8 +68,6 @@ public final class PorteroBehaviour extends Behaviour {
 		        break;
 		    }   
    	 }
-		if( myRobotAPI.getMatchRemainingTime() == 1000 )
-			RobotUtils.esbribirResultadoFichero(robot);
 
         robot.setDisplayString("PORTERO| "+state);
         return RobotAPI.ROBOT_OK;
@@ -89,8 +87,8 @@ public final class PorteroBehaviour extends Behaviour {
     	
     	int miCampo = robot.getFieldSide();
     	
-    	double irY = robot.toFieldCoordinates(robot.getBall()).y*0.25 / 0.7625; // Seguimos la posicion Y de la pelota. Pero intentando no salir del área
-    	double irX = 1.3; // Nos mantenemos dentro del área. 
+    	double irY = robot.toFieldCoordinates(robot.getBall()).y*0.25 / 0.7625; // Seguimos la posicion Y de la pelota. Pero intentando no salir del area
+    	double irX = 1.3; // Nos mantenemos dentro del area. 
     	
     	Vec2 ir = new Vec2(irX*miCampo,irY);
     	RobotUtils.moverJugadorFrenando(robot, ir);	   	
@@ -105,7 +103,7 @@ public final class PorteroBehaviour extends Behaviour {
     }
 
     
-    private void stepBlock() { //TODO Funciona muy mal
+    private void stepBlock() { 
 
     	 RobotUtils.salirBloqueo(robot);
     }

@@ -90,7 +90,7 @@ public final class BloqueadorAtacante extends Behaviour {
     	robot.blockClosest();
     }
 
-    private void stepSalirBloqueo() { //TODO Funciona muy mal
+    private void stepSalirBloqueo() { 
 
    	 RobotUtils.salirBloqueo(robot);
    }

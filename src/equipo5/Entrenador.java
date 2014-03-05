@@ -10,15 +10,6 @@ import CBR.SoccerBotsSolution;
 
 import static jcolibri.util.CopyUtils.copyCaseComponent;
 
-/*import equipo4.Attacker;
-import equipo4.BloqueadorAtacante;
-import equipo4.BloqueadorPortero;
-import equipo4.Defender;
-import equipo4.GoToBall;
-import equipo4.NopBehaviour;
-import equipo4.PorteroBehaviour;
-import equipo4.RobotUtils;
-import equipo4.Wander;*/
 
 public class Entrenador extends TeamManager { 
 	 
@@ -94,7 +85,7 @@ public class Entrenador extends TeamManager {
 	@Override
 	protected void onTakeStep() {
 
-		/** Aquí creo que deberíamos hacer el run() del CBR para que calcule el comportamiento de cada jugador **/
+		/** Aqui creo que deberiamos hacer el run() del CBR para que calcule el comportamiento de cada jugador **/
 
 		
 		
@@ -124,7 +115,7 @@ public class Entrenador extends TeamManager {
 		int actualOpScore = myRobotAPI.getOpponentScore();
 		int actualDif = actualMyScore - actualOpScore;
 		if (des.getDiferenciaGoles()>actualDif){
-			//Si entra aquí significa que al menos la diferencia se mantiene o ha mejorado
+			//Si entra aqui significa que al menos la diferencia se mantiene o ha mejorado
 			CBRCase aprenderCaso = new CBRCase();
 			int num_casos = recomender.getNumCasos()+1;
 			
@@ -138,7 +129,7 @@ public class Entrenador extends TeamManager {
 			guardarSol.setJugador3(sol.getJugador3());
 			guardarSol.setJugador4(sol.getJugador4());
 			guardarSol.setJugador5(sol.getJugador5());
-			//Crear valoracion de la solución
+			//Crear valoracion de la solucion
 			int valorar = 0;
 			if (des.getGolesFavor()<actualMyScore){
 				//He metido gol
@@ -151,8 +142,8 @@ public class Entrenador extends TeamManager {
 				}
 			}
 			else {
-				//No he metido gole el contrario tampoco habrá metido goles
-				//Si hubiese metido no estaríamos evaluando porque la diferencia sería peor que la que teníamos
+				//No he metido gole el contrario tampoco habra metido goles
+				//Si hubiese metido no estariamos evaluando porque la diferencia sería peor que la que teníamos
 				valorar += 1;
 			}
 			guardarSol.setValoracion(valorar);			

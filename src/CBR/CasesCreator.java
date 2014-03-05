@@ -36,8 +36,8 @@ public class CasesCreator {
 			bw.write(golesContra+",");
 			bw.write(diferencia+",");
 			bw.write(tiempo+",");
-			/* escribir la salida (recomendación) */
-			//TODO no tengo muy claro cómo o qué exactamente representar
+			/* escribir la salida (recomendacion) */
+			//TODO no tengo muy claro como o que exactamente representar
 			bw.write('\n');
 			id++;
 			bw.close();

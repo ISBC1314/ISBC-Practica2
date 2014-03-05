@@ -30,22 +30,22 @@ public class Recommender implements StandardCBRApplication
 	
 	/**  
 		
-		--> Pasos para crear una aplicación CBR <--
+		--> Pasos para crear una aplicacion CBR <--
 		
-		1. Crear la clase principal de la aplicación -> StandardCBRApplication
+		1. Crear la clase principal de la aplicacion -> StandardCBRApplication
 				· public interface StandardCBRApplication
 		
 		2. Representar los componentes de los casos -> CaseComponent
 				· SoccerBotsDescription
 				· SoccerBotsSolution
 		
-		3. Elegir una implementación de la base de casos -> CaseBase
+		3. Elegir una implementacion de la base de casos -> CaseBase
 				· _caseBase = new LinealCaseBase();		¿?
 				
 		4. Configurar o crear un conector que carge la base de casos -> Connector
 				· HSQLDB
 		
-		5. Completar el código de la aplicación.
+		5. Completar el codigo de la aplicacion.
 	 
 	*/
 	
@@ -67,7 +67,7 @@ public class Recommender implements StandardCBRApplication
 	
 	/* El "Connector":
 	 	· Se puede crear implementando la Interfaz
-	 	· O usar los ya implementados: DDBB, TXT y Onto. Se inicializan a través de un archivo XML
+	 	· O usar los ya implementados: DDBB, TXT y Onto. Se inicializan a traves de un archivo XML
 	jCOLIBRI2 incluye uno implementado en Java: HSQLDB
 	*/
 	private static Recommender _instance = null;
@@ -95,7 +95,7 @@ public class Recommender implements StandardCBRApplication
 					/*** CONFIGURE ***/
 					/*****************/
 	
-	/** Configura la persistencia de los casos y su organización en memoria **/
+	/** Configura la persistencia de los casos y su organizacion en memoria **/
 	@Override
 	public void configure(){
 		try{
@@ -149,7 +149,7 @@ public class Recommender implements StandardCBRApplication
 		
 		// Primero configuramos el KNN
 		NNConfig simConfig = new NNConfig();		
-		// Ajustamos la función de similitud GLOBAL para la descripción del caso
+		// Ajustamos la funcion de similitud GLOBAL para la descripcion del caso
 		simConfig.setDescriptionSimFunction(new Average());
 		// Ajustamos las funciones de similitud LOCAL en un metodo aparte
 		localSimConfig(simConfig);
@@ -174,8 +174,8 @@ public class Recommender implements StandardCBRApplication
 				solMax = sol;
 			}
 			if (maxValoracion < 5){
-				//TODO en caso de que ninguna solución nos guste lo suficiente, crear una ramdon
-				//Así iremos almacenando nuevos casos y no siempre basandonos en los que tenemos
+				//TODO en caso de que ninguna solucion nos guste lo suficiente, crear una ramdon
+				//Asi iremos almacenando nuevos casos y no siempre basandonos en los que tenemos
 			}
 			System.out.println(nse);
 			System.out.println(sol);

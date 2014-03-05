@@ -75,9 +75,7 @@ public final class RobotUtils {
 	}
 	
     /**
-	 * Para salir del bloqueo gira 90º 
-	 * Dependiendo de si el jugador se digige al este o al oeste del campo
-	 * gira los 90º a la derecha o a la izquierda
+	 * Sale de un bloqueo
 	 */    
     public static void salirBloqueo (RobotAPI robot) {
     	
