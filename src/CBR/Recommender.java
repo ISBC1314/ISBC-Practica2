@@ -104,6 +104,7 @@ public class Recommender implements StandardCBRApplication
 		}catch (Exception e){
 			e.printStackTrace();
 		}
+		
 	}
 
 	
@@ -216,6 +217,7 @@ public class Recommender implements StandardCBRApplication
 	/** Libera los recursos y finaliza **/
 	@Override
 	public void postCycle(){
+
 	}
 	
 	

@@ -89,7 +89,7 @@ public class Entrenador extends TeamManager {
 		
 		int tiempo_pasado = Math.abs(tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime());
 		
-		if(tiempo_pasado >= 5000){ //Aprox 20 segundos
+		if(tiempo_pasado >= 3000){ //Aprox 20 segundos
 			
 			if (!primeraConsulta){aprender(descripcion,solucion);}
 
@@ -118,8 +118,9 @@ public class Entrenador extends TeamManager {
 		int actualMyScore = myRobotAPI.getMyScore();
 		int actualOpScore = myRobotAPI.getOpponentScore();
 		int actualDif = actualMyScore - actualOpScore;
-		//if (des.getDiferenciaGoles()>actualDif){
-			//Si entra aqui significa que al menos la diferencia se mantiene o ha mejorado
+		
+		if(des.getGolesContra() <= actualOpScore ){ //Si me han metido un gol no aprendo
+		
 			CBRCase aprenderCaso = new CBRCase();
 			int num_casos = recomender.getNumCasos()+1;
 			
@@ -133,28 +134,29 @@ public class Entrenador extends TeamManager {
 			guardarSol.setJugador3(sol.getJugador3());
 			guardarSol.setJugador4(sol.getJugador4());
 			guardarSol.setJugador5(sol.getJugador5());
+			
 			//Crear valoracion de la solucion
+			int difGoles = actualMyScore - des.getGolesFavor();
 			int valorar = 0;
-			if (des.getGolesFavor()<actualMyScore){
-				//He metido gol
-				int difGoles = actualMyScore - des.getGolesFavor();
-				valorar += 2*difGoles;
-				if (des.getGolesContra()<actualOpScore){
-					//Tambien ha metido gol el contrario
+			if (des.getGolesFavor()<actualMyScore){ //He metido gol
+				
+				valorar = 10;
+				if (des.getGolesContra()<actualOpScore){ //Tambien ha metido gol el contrario
+					
 					difGoles = actualOpScore - des.getGolesContra();
-					valorar -= difGoles; 
+					valorar += difGoles; 
 				}
 			}
 			else {
 				//No he metido gole el contrario tampoco habra metido goles
-				//Si hubiese metido no estariamos evaluando porque la diferencia sería peor que la que teníamos
-				valorar += 1;
+				valorar = 5 + difGoles;
 			}
 			guardarSol.setValoracion(valorar);			
 			aprenderCaso.setSolution(guardarSol);
 			
 			recomender.guardarCaso(aprenderCaso);
-		//}
+		}
+
 	}
 	
 	private void aplicarSolucion(){
