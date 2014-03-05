@@ -160,15 +160,6 @@ public class Recommender implements StandardCBRApplication
 		int i = 0;
 		for(RetrievalResult nse: eval){
 			
-			// Guardamos los casos en un txt
-			try {
-				CBRCase caso = (CBRCase) nse.get_case();
-				CaseComponent d = caso.getDescription();
-				String guardarCaso = d.toString();
-				caseCreator.guarda(i, guardarCaso);
-				i++;
-			} catch (IOException e) { e.printStackTrace(); }
-			
 			SoccerBotsSolution sol = (SoccerBotsSolution) nse.get_case().getSolution();
 			int val = sol.getValoracion() ;
 			if(maxValoracion < val){
@@ -284,7 +275,5 @@ public class Recommender implements StandardCBRApplication
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
 }// CasesCBR

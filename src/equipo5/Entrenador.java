@@ -1,13 +1,17 @@
 package equipo5;
 
+import static jcolibri.util.CopyUtils.copyCaseComponent;
+
+import java.io.IOException;
+
 import jcolibri.cbrcore.CBRCase;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
 import teams.ucmTeam.TeamManager;
+import CBR.CaseCreator;
 import CBR.Recommender;
 import CBR.SoccerBotsDescription;
 import CBR.SoccerBotsSolution;
-import static jcolibri.util.CopyUtils.copyCaseComponent;
 
 
 public class Entrenador extends TeamManager { 
@@ -30,6 +34,7 @@ public class Entrenador extends TeamManager {
 	private SoccerBotsSolution solucion;
 	private SoccerBotsDescription descripcion;
 	private RobotAPI myRobotAPI;
+	private CaseCreator caseCreator = new CaseCreator();
 	
 	Recommender recomender = new Recommender();
 	
@@ -59,6 +64,11 @@ public class Entrenador extends TeamManager {
 
 	@Override
 	public int onConfigure() {
+		
+		try {
+			caseCreator.guarda("-------------------------------------------------------------------------------------");
+		} catch (IOException e) { e.printStackTrace(); }
+		
 		return RobotAPI.ROBOT_OK;
 	}
 

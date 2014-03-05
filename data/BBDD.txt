@@ -1,4 +1,3 @@
-
 Caso0: SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=100]
 Caso1: SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=90]
 Caso2: SoccerBotsDescription [diferenciaGoles=0,resultado=0-0,tiempoRestante=80]
