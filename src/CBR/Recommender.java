@@ -20,7 +20,6 @@ import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.selection.SelectCases;
 
-//import com.sun.java.util.collections.Collection;
 
 /**
  * main class of the project
@@ -160,23 +159,25 @@ public class Recommender implements StandardCBRApplication
 		int maxValoracion = -999999;
 		SoccerBotsSolution solMax = new SoccerBotsSolution();
 		for(RetrievalResult nse: eval){
-			//CBRCase c = (CBRCase)nse.get_case();
 			SoccerBotsSolution sol = (SoccerBotsSolution) nse.get_case().getSolution();
-			int val = sol.getValoracion();
+			int val = sol.getValoracion() ;
 			if(maxValoracion < val){
 				maxValoracion = sol.getValoracion();
 				solMax = sol;
 			}
-			if (maxValoracion < 5){
-				//TODO en caso de que ninguna solucion nos guste lo suficiente, crear una ramdon
-				//Asi iremos almacenando nuevos casos y no siempre basandonos en los que tenemos
-			}
+			
 			System.out.println(nse);
 			System.out.println(sol);
-			
+		}
+		
+		if (maxValoracion < 5){
+			//TODO en caso de que ninguna solucion nos guste lo suficiente, crear una ramdon
+			//Asi iremos almacenando nuevos casos y no siempre basandonos en los que tenemos
 		}
 		
 		solucion = solMax;
+		
+		System.out.println(solucion);
 		
 		/*System.out.println("Retrieved cases:");
 		for(RetrievalResult nse: eval)
@@ -208,7 +209,6 @@ public class Recommender implements StandardCBRApplication
 	/** Libera los recursos y finaliza **/
 	@Override
 	public void postCycle(){
-		this._connector.close();
 	}
 	
 	

@@ -75,18 +75,34 @@ public class Entrenador extends TeamManager {
 
 	@Override
 	public int onConfigure() {
-		
 		return RobotAPI.ROBOT_OK;
 	}
 
 	@Override
 	protected void onTakeStep() {
 
-		/** Aqui creo que deberiamos hacer el run() del CBR para que calcule el comportamiento de cada jugador **/
-
-		
 		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione	
-		int tiempo_pasado = tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime();
+		
+		
+		if(singleton){
+			tiempo_ultimo = (int) myRobotAPI.getMatchTotalTime();
+			singleton = false;
+		}
+		
+		
+		int tiempo_pasado = Math.abs(tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime());
+		
+		if(tiempo_pasado >= 20000){ //Aprox 20 segundos
+			int myScore = myRobotAPI.getMyScore();
+			int opScore = myRobotAPI.getOpponentScore();
+			int dif = Math.abs(myScore - opScore);
+			int tiempoFalta = (int) myRobotAPI.getMatchRemainingTime();
+			recomender.run(myScore, opScore , dif, tiempoFalta);
+			singleton = false;
+			tiempo_ultimo =  (int) myRobotAPI.getMatchRemainingTime();
+		}
+		
+		/*int tiempo_pasado = tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime();
 		if(tiempo_pasado >= 20){
 			if (!primeraConsulta){aprender(descripcion,solucion);}
 			descripcion = new SoccerBotsDescription();
@@ -102,7 +118,7 @@ public class Entrenador extends TeamManager {
 			solucion = recomender.getSolucion();
 			aplicarSolucion();
 			tiempo_ultimo = (int) myRobotAPI.getTimeStamp();
-		}
+		}*/
 	}
 
 	private void aprender(SoccerBotsDescription des, SoccerBotsSolution sol){

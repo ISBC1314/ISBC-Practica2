@@ -1,4 +1,9 @@
-TupiTeam2 t070801.TupiTeam2
-TiquiTaca t070802.TiquiTaca
-VamosEquipo t070810.VamosEquipo
-IKHomoG teamsSoccerbots.AIKHomoG
+CMR t1314grupo18.EquipoCuatroTeam
+teamRocket t101118.EquipoActimel
+SkitHall t101115.SkitHall
+A-team t101113.equipoA
+Catenaccio t101108.Catenaccio
+G3RBT t101103.equipos.G3RBT
+SpTorrejon t101114.team.Team
+Chanantes t101102.Chanantes
+BroncosDeDenver t101112.BroncosDeDenver
