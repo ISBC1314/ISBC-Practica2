@@ -92,7 +92,7 @@ public class Entrenador extends TeamManager {
 		
 		int tiempo_pasado = Math.abs(tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime());
 		
-		if(tiempo_pasado >= 20000){ //Aprox 20 segundos
+		if(tiempo_pasado >= 5000){ //Aprox 20 segundos
 			int myScore = myRobotAPI.getMyScore();
 			int opScore = myRobotAPI.getOpponentScore();
 			int dif = Math.abs(myScore - opScore);
@@ -100,7 +100,12 @@ public class Entrenador extends TeamManager {
 			recomender.run(myScore, opScore , dif, tiempoFalta);
 			singleton = false;
 			tiempo_ultimo =  (int) myRobotAPI.getMatchRemainingTime();
+			solucion = recomender.getSolucion();
+			aplicarSolucion();
 		}
+		
+		
+		
 		
 		/*int tiempo_pasado = tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime();
 		if(tiempo_pasado >= 20){

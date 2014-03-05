@@ -170,8 +170,15 @@ public class Recommender implements StandardCBRApplication
 			System.out.println(sol);
 		}
 		
-		if (maxValoracion < 5){
-			//TODO en caso de que ninguna solucion nos guste lo suficiente, crear una ramdon
+		if (maxValoracion < 15){
+
+			solMax.setJugador1(1 + (int)(Math.random()*9) );
+			solMax.setJugador2(1 + (int)(Math.random()*9) );
+			solMax.setJugador3(1 + (int)(Math.random()*9) );
+			solMax.setJugador4(1 + (int)(Math.random()*9) );
+			solMax.setJugador5(1 + (int)(Math.random()*9) );
+			
+			//en caso de que ninguna solucion nos guste lo suficiente, crear una ramdon
 			//Asi iremos almacenando nuevos casos y no siempre basandonos en los que tenemos
 		}
 		

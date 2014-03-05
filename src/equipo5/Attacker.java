@@ -33,7 +33,6 @@ public class Attacker extends Behaviour{
 	public int takeStep() {
 		
 		state = makeStates();
-		System.out.println(state);
 		
 		switch (state) {
 			case GOTO: {
