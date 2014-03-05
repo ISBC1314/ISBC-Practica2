@@ -1,5 +1,6 @@
 package CBR;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -9,6 +10,7 @@ import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
+import jcolibri.cbrcore.CaseComponent;
 import jcolibri.cbrcore.Connector;
 import jcolibri.connector.DataBaseConnector;
 import jcolibri.exception.InitializingException;
@@ -66,6 +68,7 @@ public class Recommender implements StandardCBRApplication
 	private static Recommender _instance = null;
 	private Connector _connector;	// Debe mapear cada atributo del caso en una columna de la BBDD
 	private CBRCaseBase _caseBase;
+	private CaseCreator caseCreator = new CaseCreator();
 	
 	int n_casos = 5;
 	
@@ -159,7 +162,16 @@ public class Recommender implements StandardCBRApplication
 		// Imprimimos el resultado
 		int maxValoracion = -999999;
 		SoccerBotsSolution solMax = new SoccerBotsSolution();
+		int i = 0;
 		for(RetrievalResult nse: eval){
+			try {
+				CBRCase caso = (CBRCase) nse.get_case();
+				CaseComponent d = caso.getDescription();
+				String guardarCaso = d.toString();
+				caseCreator.guarda(i, guardarCaso);
+				i++;
+			} catch (IOException e) { e.printStackTrace(); }
+			
 			SoccerBotsSolution sol = (SoccerBotsSolution) nse.get_case().getSolution();
 			int val = sol.getValoracion() ;
 			if(maxValoracion < val){

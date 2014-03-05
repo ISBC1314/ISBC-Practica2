@@ -86,7 +86,7 @@ object EDU.gatech.cc.is.simulation.ObstacleInvisibleSim -2.047 -1.4396 0 1.0
 // from getting jumpy on slow machines, or when/if your process gets 
 // swapped out. 
 
-maxtimestep 19 
+maxtimestep 34 
 
 //====== 
 // TIMEOUT 
@@ -99,7 +99,7 @@ maxtimestep 19
 // is reached. If no timeout statement is given, the default is no 
 // termination. 
 // 
-timeout 40000 // ten seconds 
+timeout 30000 // ten seconds 
 
 //====== 
 // TIME 
@@ -157,32 +157,32 @@ xffffff x000000 3
 // numbers according to the order in which they are listed here. 
 //======WEST TEAM====== 
 westname WestTeam 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo3.EquipoConFSM 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -1.2 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo3.EquipoConFSM 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -.5 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo3.EquipoConFSM 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 .5 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo3.EquipoConFSM 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 0 0 x3399ff x444444 1 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo3.EquipoConFSM 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
 //------------your control system name goes here ^^^^^^^^ 
 -.15 -.5 0 x3399ff x444444 1 
 
 //======EAST TEAM====== 
 eastname EastTeam 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo1.PorteroTeam 
 1.2 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo1.PorteroTeam 
 .5 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo1.PorteroTeam 
 .15 .5 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo1.PorteroTeam 
 .15 0 0 xff3333 xffff66 2 
-robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo5.TestTeam 
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim equipo1.PorteroTeam 
 .15 -.5 0 xff3333 xffff66 2 
 
