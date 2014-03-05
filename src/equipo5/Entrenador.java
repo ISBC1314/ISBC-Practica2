@@ -26,7 +26,7 @@ public class Entrenador extends TeamManager {
 	};
 	
 	private int tiempo_ultimo;
-	private boolean primeraConsulta = false;
+	private boolean primeraConsulta = true;
 	private SoccerBotsSolution solucion;
 	private SoccerBotsDescription descripcion;
 
@@ -44,8 +44,6 @@ public class Entrenador extends TeamManager {
 	private int portero = 0;
 	private int porteroSustituto = 2;
 	Recommender recomender = new Recommender();
-	
-	boolean singleton = true;
 	
 	//StandardCBRApplication cbrApp;
 
@@ -84,46 +82,36 @@ public class Entrenador extends TeamManager {
 		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione	
 		
 		
-		if(singleton){
+		if(primeraConsulta){
 			tiempo_ultimo = (int) myRobotAPI.getMatchTotalTime();
-			singleton = false;
 		}
 		
 		
 		int tiempo_pasado = Math.abs(tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime());
 		
 		if(tiempo_pasado >= 5000){ //Aprox 20 segundos
+			
+			if (!primeraConsulta){aprender(descripcion,solucion);}
+
 			int myScore = myRobotAPI.getMyScore();
 			int opScore = myRobotAPI.getOpponentScore();
 			int dif = Math.abs(myScore - opScore);
 			int tiempoFalta = (int) myRobotAPI.getMatchRemainingTime();
 			recomender.run(myScore, opScore , dif, tiempoFalta);
-			singleton = false;
+			
+			descripcion = new SoccerBotsDescription();
+			descripcion.setGolesFavor(myScore);
+			descripcion.setGolesContra(opScore);
+			descripcion.setDiferenciaGoles(dif);
+			descripcion.setTiempoQueFalta(tiempoFalta);
+			
 			tiempo_ultimo =  (int) myRobotAPI.getMatchRemainingTime();
 			solucion = recomender.getSolucion();
 			aplicarSolucion();
+			
+			primeraConsulta = false;
 		}
 		
-		
-		
-		
-		/*int tiempo_pasado = tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime();
-		if(tiempo_pasado >= 20){
-			if (!primeraConsulta){aprender(descripcion,solucion);}
-			descripcion = new SoccerBotsDescription();
-			int myScore = myRobotAPI.getMyScore();
-			descripcion.setGolesFavor(myScore);
-			int opScore = myRobotAPI.getOpponentScore();
-			descripcion.setGolesContra(opScore);
-			int dif = myScore - opScore;
-			descripcion.setDiferenciaGoles(dif);
-			int tiempoFalta = (int) myRobotAPI.getMatchRemainingTime();
-			descripcion.setTiempoQueFalta(tiempoFalta);
-			recomender.run(myScore, opScore , dif, tiempoFalta);
-			solucion = recomender.getSolucion();
-			aplicarSolucion();
-			tiempo_ultimo = (int) myRobotAPI.getTimeStamp();
-		}*/
 	}
 
 	private void aprender(SoccerBotsDescription des, SoccerBotsSolution sol){

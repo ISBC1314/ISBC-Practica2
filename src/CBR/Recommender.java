@@ -170,7 +170,7 @@ public class Recommender implements StandardCBRApplication
 			System.out.println(sol);
 		}
 		
-		if (maxValoracion < 15){
+		if (maxValoracion < 5){
 
 			solMax.setJugador1(1 + (int)(Math.random()*9) );
 			solMax.setJugador2(1 + (int)(Math.random()*9) );
@@ -225,11 +225,8 @@ public class Recommender implements StandardCBRApplication
 	
 	public void run (int gf, int gc, int dif,int t){
 		try {
-			System.out.println("antes");
 			configure();
-			System.out.println("despues");
 			preCycle();
-			System.out.println("mas despues");
 			//Crear la Query para la consulta
 			CBRQuery query = new CBRQuery();
 			SoccerBotsDescription queryDescription;
