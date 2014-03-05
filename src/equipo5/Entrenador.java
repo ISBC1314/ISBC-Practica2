@@ -118,7 +118,7 @@ public class Entrenador extends TeamManager {
 		int actualMyScore = myRobotAPI.getMyScore();
 		int actualOpScore = myRobotAPI.getOpponentScore();
 		int actualDif = actualMyScore - actualOpScore;
-		if (des.getDiferenciaGoles()>actualDif){
+		//if (des.getDiferenciaGoles()>actualDif){
 			//Si entra aqui significa que al menos la diferencia se mantiene o ha mejorado
 			CBRCase aprenderCaso = new CBRCase();
 			int num_casos = recomender.getNumCasos()+1;
@@ -154,7 +154,7 @@ public class Entrenador extends TeamManager {
 			aprenderCaso.setSolution(guardarSol);
 			
 			recomender.guardarCaso(aprenderCaso);
-		}
+		//}
 	}
 	
 	private void aplicarSolucion(){
