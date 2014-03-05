@@ -1,5 +1,6 @@
 package equipo5;
 
+import equipo4.DefensaSolo;
 import jcolibri.cbrcore.CBRCase;
 import teams.ucmTeam.Behaviour;
 import teams.ucmTeam.RobotAPI;
@@ -7,7 +8,6 @@ import teams.ucmTeam.TeamManager;
 import CBR.Recommender;
 import CBR.SoccerBotsDescription;
 import CBR.SoccerBotsSolution;
-
 import static jcolibri.util.CopyUtils.copyCaseComponent;
 
 
@@ -22,7 +22,8 @@ public class Entrenador extends TeamManager {
 			new Wander(),			    // behaviours[5] -> Wander
 			new Attacker(),			    // behaviours[6] -> Attacker
 			new BloqueadorPortero(),	// behaviours[7] -> BloqueadorPorteroContrario
-			new BloqueadorAtacante()	// behaviours[8] -> BloqueadorAtacanteContrario
+			new BloqueadorAtacante(),	// behaviours[8] -> BloqueadorAtacanteContrario
+			new DefensaSolo()			// behaviours[9] -> DefensaSolo
 	};
 	
 	private int tiempo_ultimo;
@@ -76,9 +77,6 @@ public class Entrenador extends TeamManager {
 	@Override
 	public int onConfigure() {
 		
-		//HoldOutEvaluator eval = new HoldOutEvaluator();
-		//eval.init(recomender);
-		
 		return RobotAPI.ROBOT_OK;
 	}
 
@@ -87,8 +85,6 @@ public class Entrenador extends TeamManager {
 
 		/** Aqui creo que deberiamos hacer el run() del CBR para que calcule el comportamiento de cada jugador **/
 
-		
-		
 		
 		myRobotAPI = _players[0].getRobotAPI(); // Cojemos la robot API para que funcione	
 		int tiempo_pasado = tiempo_ultimo - (int) myRobotAPI.getMatchRemainingTime();
@@ -195,27 +191,5 @@ public class Entrenador extends TeamManager {
 			return State.OFENSIVO;
 		 
 	}
-	/*
-	public void run(){
-		try{
-		
-			// Creamos la aplicacion y lo configuramos
-			Test1 test1 = new Test1();
-			test1.configure();
-			test1.preCycle();
-			
-			// Creamos una query
-			CBRQuery query = new CBRQuery();			
-			SoccerBotsDescription queryDesc = new SoccerBotsDescription();
-			query.setDescription(queryDesc);
-			
-			test1.cycle(query);
-			
-			test1.postCycle();
-		
-		} catch (Exception e){ e.printStackTrace();}
-		
-	}
-*/
 	 
 } //Entrenador

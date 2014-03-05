@@ -50,13 +50,7 @@ public class Recommender implements StandardCBRApplication
 	*/
 	
 	private static final double[] DEFAULT_WEIGHTS = {
-		/*
-		WeightVector.COMPORTAMIENTO_JUGADOR1,
-		WeightVector.COMPORTAMIENTO_JUGADOR2,
-		WeightVector.COMPORTAMIENTO_JUGADOR3,
-		WeightVector.COMPORTAMIENTO_JUGADOR4,
-		WeightVector.COMPORTAMIENTO_JUGADOR5,
-	    */
+
 		WeightVector.GOLES_FAVOR,
 		WeightVector.GOLES_CONTRA,
 	    WeightVector.SCORE,
